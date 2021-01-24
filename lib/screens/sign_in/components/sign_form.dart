@@ -5,8 +5,9 @@ import '../../../enums.dart';
 import '../../../size_config.dart';
 import '../../../components/form_error.dart';
 import '../../../components/default_button.dart';
-import '../../../components/custom_suffix_icon.dart';
+import '../../../components/custom_text_field.dart';
 import '../../forgot_password/forgot_password_screen.dart';
+import '../../login_success/login_success_screen.dart';
 
 class SignForm extends StatefulWidget {
   @override
@@ -27,7 +28,7 @@ class _SignFormState extends State<SignForm> {
       child: Column(
         children: [
           // buildEmailFormField(),
-          buildTextFormField(
+          CustomTextField(
             type: TextFieldType.email,
             label: 'Email',
             hint: 'Enter your email',
@@ -37,11 +38,13 @@ class _SignFormState extends State<SignForm> {
                 setState(() {
                   errors.add(kEmailNullError);
                 });
+                return '';
               } else if (!emailValidatorRegExp.hasMatch(value) &&
                   !errors.contains(kInvalidEmailError)) {
                 setState(() {
                   errors.add(kInvalidEmailError);
                 });
+                return '';
               }
               return null;
             },
@@ -56,13 +59,12 @@ class _SignFormState extends State<SignForm> {
                   errors.remove(kInvalidEmailError);
                 });
               }
-              return null;
             },
             onSave: (newValue) => email = newValue,
           ),
           SizedBox(height: getProportionateScreenHeight(30)),
           // buildPasswordFormField(),
-          buildTextFormField(
+          CustomTextField(
             type: TextFieldType.password,
             label: 'Password',
             hint: 'Enter your password',
@@ -72,11 +74,13 @@ class _SignFormState extends State<SignForm> {
                 setState(() {
                   errors.add(kPassNullError);
                 });
+                return '';
               } else if (value.length < 8 &&
                   !errors.contains(kShortPassError)) {
                 setState(() {
                   errors.add(kShortPassError);
                 });
+                return '';
               }
               return null;
             },
@@ -91,7 +95,6 @@ class _SignFormState extends State<SignForm> {
                   errors.remove(kShortPassError);
                 });
               }
-              return null;
             },
             onSave: (newValue) => password = newValue,
           ),
@@ -126,6 +129,8 @@ class _SignFormState extends State<SignForm> {
             onPress: () {
               if (_formKey.currentState.validate()) {
                 _formKey.currentState.save();
+                // if everything is valid then go to success screen
+                Navigator.pushNamed(context, LoginSuccessScreen.routeName);
               }
             },
           )
@@ -208,7 +213,6 @@ class _SignFormState extends State<SignForm> {
           suffixIcon: CustomSuffixIcon(svgIcon: 'assets/icons/Mail.svg')),
     );
   }
-*/
 
   TextFormField buildTextFormField({
     TextFieldType type,
@@ -234,4 +238,5 @@ class _SignFormState extends State<SignForm> {
           suffixIcon: CustomSuffixIcon(svgIcon: icon)),
     );
   }
+*/
 }
