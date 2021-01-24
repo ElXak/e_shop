@@ -1,12 +1,12 @@
-import 'package:e_shop/components/custom_text_field.dart';
-import 'package:e_shop/enums.dart';
 import 'package:flutter/material.dart';
 
 import '../../../constants.dart';
+import '../../../enums.dart';
 import '../../../size_config.dart';
 import '../../../components/form_error.dart';
 import '../../../components/default_button.dart';
 import '../../../components/no_account_text.dart';
+import '../../../components/custom_text_field.dart';
 
 class ForgotPassForm extends StatefulWidget {
   @override
