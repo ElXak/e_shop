@@ -73,7 +73,7 @@ flutter:
         - asset: assets/fonts/muli/Muli-BoldItalic.ttf
           weight: 700
           style: italic
-        - asset: assets/fonts/muli/Muli-Semi-Bold.ttf
+        - asset: assets/fonts/muli/Muli-SemiBold.ttf
           weight: 500
         - asset: assets/fonts/muli/Muli-Semi-BoldItalic.ttf
           weight: 500
