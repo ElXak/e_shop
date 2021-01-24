@@ -1,11 +1,12 @@
-import 'package:e_shop/constants.dart';
-import 'package:e_shop/screens/sign_in/sign_in_screen.dart';
-import 'package:e_shop/size_config.dart';
 import 'package:flutter/material.dart';
 
 // This is the best practice
+import '../../../constants.dart';
+import '../../../size_config.dart';
 import '../components/splash_content.dart';
 import '../../../components/default_button.dart';
+import '../../sign_in/sign_in_screen.dart';
+import 'splash_data.dart';
 
 class Body extends StatefulWidget {
   @override
@@ -14,20 +15,6 @@ class Body extends StatefulWidget {
 
 class _BodyState extends State<Body> {
   int currentPage = 0;
-  List<Map<String, String>> splashData = [
-    {
-      'text': "Welcome to Lamode, Let's shop!",
-      'image': 'assets/images/splash_1.png'
-    },
-    {
-      'text': "We help people connect with store \naround Tajikistan.",
-      'image': 'assets/images/splash_2.png'
-    },
-    {
-      'text': "We show the easy way to shop. \nJust stay at home with us.",
-      'image': 'assets/images/splash_3.png'
-    },
-  ];
 
   @override
   Widget build(BuildContext context) {

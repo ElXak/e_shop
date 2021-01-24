@@ -1,7 +1,8 @@
-import 'package:e_shop/screens/forgot_password/forgot_password_screen.dart';
-import 'package:e_shop/screens/sign_in/sign_in_screen.dart';
-import 'package:e_shop/screens/splash/splash_screen.dart';
 import 'package:flutter/widgets.dart';
+
+import 'screens/forgot_password/forgot_password_screen.dart';
+import 'screens/sign_in/sign_in_screen.dart';
+import 'screens/splash/splash_screen.dart';
 
 // We use name routes
 // All our routes will be available here

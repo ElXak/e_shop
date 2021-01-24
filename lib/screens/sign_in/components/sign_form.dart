@@ -1,11 +1,12 @@
-import 'package:e_shop/components/custom_suffix_icon.dart';
-import 'package:e_shop/components/default_button.dart';
-import 'package:e_shop/components/form_error.dart';
-import 'package:e_shop/enums.dart';
 import 'package:flutter/material.dart';
 
 import '../../../constants.dart';
+import '../../../enums.dart';
 import '../../../size_config.dart';
+import '../../../components/form_error.dart';
+import '../../../components/default_button.dart';
+import '../../../components/custom_suffix_icon.dart';
+import '../../forgot_password/forgot_password_screen.dart';
 
 class SignForm extends StatefulWidget {
   @override
@@ -25,25 +26,75 @@ class _SignFormState extends State<SignForm> {
       key: _formKey,
       child: Column(
         children: [
-          buildEmailFormField(),
-/*
+          // buildEmailFormField(),
           buildTextFormField(
             type: TextFieldType.email,
             label: 'Email',
             hint: 'Enter your email',
             icon: 'assets/icons/Mail.svg',
+            validator: (value) {
+              if (value.isEmpty && !errors.contains(kEmailNullError)) {
+                setState(() {
+                  errors.add(kEmailNullError);
+                });
+              } else if (!emailValidatorRegExp.hasMatch(value) &&
+                  !errors.contains(kInvalidEmailError)) {
+                setState(() {
+                  errors.add(kInvalidEmailError);
+                });
+              }
+              return null;
+            },
+            onChange: (value) {
+              if (value.isNotEmpty && errors.contains(kEmailNullError)) {
+                setState(() {
+                  errors.remove(kEmailNullError);
+                });
+              } else if (emailValidatorRegExp.hasMatch(value) &&
+                  errors.contains(kInvalidEmailError)) {
+                setState(() {
+                  errors.remove(kInvalidEmailError);
+                });
+              }
+              return null;
+            },
+            onSave: (newValue) => email = newValue,
           ),
-*/
           SizedBox(height: getProportionateScreenHeight(30)),
-          buildPasswordFormField(),
-/*
+          // buildPasswordFormField(),
           buildTextFormField(
             type: TextFieldType.password,
             label: 'Password',
             hint: 'Enter your password',
             icon: 'assets/icons/Lock.svg',
+            validator: (value) {
+              if (value.isEmpty && !errors.contains(kPassNullError)) {
+                setState(() {
+                  errors.add(kPassNullError);
+                });
+              } else if (value.length < 8 &&
+                  !errors.contains(kShortPassError)) {
+                setState(() {
+                  errors.add(kShortPassError);
+                });
+              }
+              return null;
+            },
+            onChange: (value) {
+              if (value.isNotEmpty && errors.contains(kPassNullError)) {
+                setState(() {
+                  errors.remove(kPassNullError);
+                });
+              } else if (value.length >= 8 &&
+                  errors.contains(kShortPassError)) {
+                setState(() {
+                  errors.remove(kShortPassError);
+                });
+              }
+              return null;
+            },
+            onSave: (newValue) => password = newValue,
           ),
-*/
           SizedBox(height: getProportionateScreenHeight(30)),
           Row(
             children: [
@@ -58,9 +109,13 @@ class _SignFormState extends State<SignForm> {
               ),
               Text("Remember me"),
               Spacer(),
-              Text(
-                "Forgot password",
-                style: TextStyle(decoration: TextDecoration.underline),
+              GestureDetector(
+                onTap: () => Navigator.pushNamed(
+                    context, ForgotPasswordScreen.routeName),
+                child: Text(
+                  "Forgot password",
+                  style: TextStyle(decoration: TextDecoration.underline),
+                ),
               ),
             ],
           ),
@@ -79,6 +134,7 @@ class _SignFormState extends State<SignForm> {
     );
   }
 
+/*
   TextFormField buildPasswordFormField() {
     return TextFormField(
       onSaved: (newValue) => password = newValue,
@@ -152,19 +208,25 @@ class _SignFormState extends State<SignForm> {
           suffixIcon: CustomSuffixIcon(svgIcon: 'assets/icons/Mail.svg')),
     );
   }
+*/
 
-/*
   TextFormField buildTextFormField({
     TextFieldType type,
     String label,
     String hint,
     String icon,
+    Function validator,
+    Function onChange,
+    Function onSave,
   }) {
     return TextFormField(
       obscureText: type == TextFieldType.password ? true : false,
       keyboardType: type == TextFieldType.email
           ? TextInputType.emailAddress
           : TextInputType.text,
+      validator: validator,
+      onChanged: onChange,
+      onSaved: onSave,
       decoration: InputDecoration(
           labelText: label,
           hintText: hint,
@@ -172,5 +234,4 @@ class _SignFormState extends State<SignForm> {
           suffixIcon: CustomSuffixIcon(svgIcon: icon)),
     );
   }
-*/
 }
