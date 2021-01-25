@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../../../components/social_card.dart';
+import '../../../components/social_row.dart';
 import '../../../components/no_account_text.dart';
+import '../../../constants.dart';
 import '../../../size_config.dart';
 import 'sign_form.dart';
 
@@ -20,11 +21,7 @@ class Body extends StatelessWidget {
                 SizedBox(height: SizeConfig.screenHeight * 0.04),
                 Text(
                   'Welcome Back',
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: getProportionateScreenWidth(28),
-                    fontWeight: FontWeight.bold,
-                  ),
+                  style: headingStyle,
                 ),
                 Text(
                   'Sign in with your email and password \nor continue with social media',
@@ -33,23 +30,7 @@ class Body extends StatelessWidget {
                 SizedBox(height: SizeConfig.screenHeight * 0.08),
                 SignForm(),
                 SizedBox(height: SizeConfig.screenHeight * 0.08),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    SocialCard(
-                      icon: 'assets/icons/google-icon.svg',
-                      onPress: () {},
-                    ),
-                    SocialCard(
-                      icon: 'assets/icons/facebook-2.svg',
-                      onPress: () {},
-                    ),
-                    SocialCard(
-                      icon: 'assets/icons/twitter.svg',
-                      onPress: () {},
-                    ),
-                  ],
-                ),
+                SocialRow(),
                 SizedBox(height: getProportionateScreenHeight(20)),
                 NoAccountText(),
               ],

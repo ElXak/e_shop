@@ -20,6 +20,22 @@ class _ForgotPassFormState extends State<ForgotPassForm> {
   bool remember = false;
   final List<String> errors = [];
 
+  void addError({String error}) {
+    if (!errors.contains(error)) {
+      setState(() {
+        errors.add(error);
+      });
+    }
+  }
+
+  void removeError({String error}) {
+    if (errors.contains(error)) {
+      setState(() {
+        errors.remove(error);
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -32,30 +48,22 @@ class _ForgotPassFormState extends State<ForgotPassForm> {
             hint: 'Enter your email',
             icon: 'assets/icons/Mail.svg',
             validator: (value) {
-              if (value.isEmpty && !errors.contains(kEmailNullError)) {
-                setState(() {
-                  errors.add(kEmailNullError);
-                });
+              if (value.isEmpty) {
+                addError(error: kEmailNullError);
                 return '';
-              } else if (!emailValidatorRegExp.hasMatch(value) &&
-                  !errors.contains(kInvalidEmailError)) {
-                setState(() {
-                  errors.add(kInvalidEmailError);
-                });
+              }
+              if (!emailValidatorRegExp.hasMatch(value)) {
+                addError(error: kInvalidEmailError);
                 return '';
               }
               return null;
             },
             onChange: (value) {
-              if (value.isNotEmpty && errors.contains(kEmailNullError)) {
-                setState(() {
-                  errors.remove(kEmailNullError);
-                });
-              } else if (emailValidatorRegExp.hasMatch(value) &&
-                  errors.contains(kInvalidEmailError)) {
-                setState(() {
-                  errors.remove(kInvalidEmailError);
-                });
+              if (value.isNotEmpty) {
+                removeError(error: kEmailNullError);
+              }
+              if (emailValidatorRegExp.hasMatch(value)) {
+                removeError(error: kInvalidEmailError);
               }
             },
             onSave: (newValue) => email = newValue,
