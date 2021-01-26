@@ -25,11 +25,22 @@ class CustomTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    TextInputType inputType;
+
+    switch (type) {
+      case TextFieldType.email:
+        inputType = TextInputType.emailAddress;
+        break;
+      case TextFieldType.phoneNumber:
+        inputType = TextInputType.number;
+        break;
+      default:
+        inputType = TextInputType.text;
+    }
+
     return TextFormField(
       obscureText: type == TextFieldType.password ? true : false,
-      keyboardType: type == TextFieldType.email
-          ? TextInputType.emailAddress
-          : TextInputType.text,
+      keyboardType: inputType,
       validator: validator,
       onChanged: onChange,
       onSaved: onSave,

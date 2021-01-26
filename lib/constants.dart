@@ -29,3 +29,6 @@ final String kInvalidEmailError = "Please enter valid email";
 final String kPassNullError = "Please enter your password";
 final String kShortPassError = "Password is too short";
 final String kMatchPassError = "Passwords don't match";
+final String kNameNullError = "Please enter your name";
+final String kPhoneNumberNullError = "Please enter your phone number";
+final String kAddressNullError = "Please enter your address";

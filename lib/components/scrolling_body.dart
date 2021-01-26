@@ -5,10 +5,12 @@ import '../size_config.dart';
 class ScrollingBody extends StatelessWidget {
   const ScrollingBody({
     Key key,
-    this.children,
+    // this.children,
+    this.child,
   }) : super(key: key);
 
-  final List<Widget> children;
+  // final List<Widget> children;
+  final Widget child;
 
   @override
   Widget build(BuildContext context) {
@@ -18,9 +20,10 @@ class ScrollingBody extends StatelessWidget {
         padding:
             EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
         child: SingleChildScrollView(
-          child: Column(
+          child: child /*Column(
             children: children,
-          ),
+          )*/
+          ,
         ),
       ),
     );
