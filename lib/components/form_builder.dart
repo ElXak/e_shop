@@ -8,7 +8,8 @@ import 'default_button.dart';
 import 'custom_text_field.dart';
 import 'no_account_text.dart';
 import 'social_row.dart';
-import 'form_header.dart';
+import 'form_title.dart';
+import 'form_text.dart';
 import '../screens/forgot_password/forgot_password_screen.dart';
 
 class FormBuilder extends StatefulWidget {
@@ -18,11 +19,13 @@ class FormBuilder extends StatefulWidget {
     this.title,
     this.text,
     this.afterHeader,
+    this.beforeSubmit,
+    this.afterSubmit,
     this.routeName,
     this.textFields,
   });
 
-  final double beforeHeader, afterHeader;
+  final double beforeHeader, afterHeader, beforeSubmit, afterSubmit;
   final FormName formName;
   final String title, text, routeName;
   final List<TextFieldType> textFields;
@@ -40,10 +43,64 @@ class _FormBuilderState extends State<FormBuilder> {
   String lastName;
   String phoneNumber;
   String address;
-
   bool remember = false;
+
+  FocusNode pin2FocusNode;
+  FocusNode pin3FocusNode;
+  FocusNode pin4FocusNode;
+  List<FocusNode> focusNodes;
+
   final List<String> errors = [];
   List<Widget> widgets;
+
+  @override
+  void initState() {
+    super.initState();
+    pin2FocusNode = FocusNode();
+    pin3FocusNode = FocusNode();
+    pin4FocusNode = FocusNode();
+    focusNodes = [
+      pin2FocusNode,
+      pin3FocusNode,
+      pin4FocusNode,
+    ];
+  }
+
+  @override
+  void dispose() {
+    pin2FocusNode.dispose();
+    pin3FocusNode.dispose();
+    pin4FocusNode.dispose();
+    focusNodes.clear();
+    super.dispose();
+  }
+
+  SizedBox buildOPTTextField({int index}) {
+    return SizedBox(
+      width: getProportionateScreenWidth(60),
+      child: TextFormField(
+        autofocus: index == 0 ? true : false,
+        focusNode: index == 0 ? null : focusNodes[index - 1],
+        obscureText: true,
+        keyboardType: TextInputType.number,
+        style: TextStyle(fontSize: 24),
+        textAlign: TextAlign.center,
+        decoration: kOtpInputDecoration,
+        onChanged: (value) {
+          //TODO store value
+          index < focusNodes.length
+              ? nextField(value: value, focusNode: focusNodes[index])
+              : focusNodes[index - 1].unfocus();
+        },
+      ),
+    );
+  }
+
+  void nextField({String value, FocusNode focusNode}) {
+    if (value.length == 1) {
+      focusNode.requestFocus();
+    }
+  }
 
   void addError({String error}) {
     if (!errors.contains(error)) {
@@ -158,12 +215,13 @@ class _FormBuilderState extends State<FormBuilder> {
     }
   }
 
-  void addTextFields() {
+  List<Widget> textFields() {
+    List<Widget> listTextFields = [];
     int fieldCounter = 1;
     for (TextFieldType textField in widget.textFields) {
       switch (textField) {
         case TextFieldType.email:
-          widgets.add(CustomTextField(
+          listTextFields.add(CustomTextField(
             type: TextFieldType.email,
             label: 'Email',
             hint: 'Enter your email',
@@ -174,7 +232,7 @@ class _FormBuilderState extends State<FormBuilder> {
           ));
           break;
         case TextFieldType.password:
-          widgets.add(CustomTextField(
+          listTextFields.add(CustomTextField(
             type: TextFieldType.password,
             label: 'Password',
             hint: 'Enter your password',
@@ -185,7 +243,7 @@ class _FormBuilderState extends State<FormBuilder> {
           ));
           break;
         case TextFieldType.confirmPassword:
-          widgets.add(CustomTextField(
+          listTextFields.add(CustomTextField(
             type: TextFieldType.password,
             label: 'Confirm Password',
             hint: 'Re-enter your password',
@@ -197,7 +255,7 @@ class _FormBuilderState extends State<FormBuilder> {
           ));
           break;
         case TextFieldType.firstName:
-          widgets.add(CustomTextField(
+          listTextFields.add(CustomTextField(
             type: TextFieldType.firstName,
             label: 'First Name',
             hint: 'Enter your first name',
@@ -208,7 +266,7 @@ class _FormBuilderState extends State<FormBuilder> {
           ));
           break;
         case TextFieldType.lastName:
-          widgets.add(CustomTextField(
+          listTextFields.add(CustomTextField(
             type: TextFieldType.lastName,
             label: 'Last Name',
             hint: 'Enter your last name',
@@ -217,7 +275,7 @@ class _FormBuilderState extends State<FormBuilder> {
           ));
           break;
         case TextFieldType.phoneNumber:
-          widgets.add(CustomTextField(
+          listTextFields.add(CustomTextField(
             type: TextFieldType.phoneNumber,
             label: 'Phone Number',
             hint: 'Enter your phone number',
@@ -228,7 +286,7 @@ class _FormBuilderState extends State<FormBuilder> {
           ));
           break;
         case TextFieldType.address:
-          widgets.add(CustomTextField(
+          listTextFields.add(CustomTextField(
             type: TextFieldType.address,
             label: 'Address',
             hint: 'Enter your address',
@@ -241,65 +299,167 @@ class _FormBuilderState extends State<FormBuilder> {
       }
 
       if (fieldCounter < 4)
-        widgets.add(SizedBox(height: getProportionateScreenHeight(30)));
+        listTextFields.add(SizedBox(height: getProportionateScreenHeight(30)));
       fieldCounter++;
     }
+
+    return listTextFields;
+  }
+
+  Row buildTimer() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Text('This code will expire in '),
+        TweenAnimationBuilder(
+          tween: Tween(begin: 30.0, end: 0),
+          duration: Duration(seconds: 30), // because we allow user 30s
+          builder: (context, vale, child) => Text(
+            '00:${vale.toInt()}',
+            style: TextStyle(color: kPrimaryColor),
+          ),
+          onEnd: () {
+            //TODO clear OTP code in server
+          },
+        ),
+      ],
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     widgets = [
-      FormHeader(
-        before: widget.beforeHeader,
-        title: widget.title,
-        text: widget.text,
-        after: widget.afterHeader,
-      ),
+      SizedBox(height: SizeConfig.screenHeight * widget.beforeHeader),
+      FormTitle(widget.title),
+      FormText(widget.text),
+      SizedBox(height: SizeConfig.screenHeight * widget.afterHeader),
     ];
 
-    addTextFields();
+    if (widget.formName == FormName.otp) {
+      widgets = [
+        ...widgets,
+        buildTimer(),
+        SizedBox(height: SizeConfig.screenHeight * 0.15),
+      ];
+    } else {
+      widgets = [
+        ...widgets,
+        ...textFields(),
+      ];
+    }
+
+    if (widget.formName == FormName.signIn)
+      widgets = [
+        ...widgets,
+        Row(
+          children: [
+            Checkbox(
+              value: remember,
+              activeColor: kPrimaryColor,
+              onChanged: (value) {
+                setState(() {
+                  remember = value;
+                });
+              },
+            ),
+            Text("Remember me"),
+            Spacer(),
+            GestureDetector(
+              onTap: () =>
+                  Navigator.pushNamed(context, ForgotPasswordScreen.routeName),
+              child: Text(
+                "Forgot password",
+                style: TextStyle(decoration: TextDecoration.underline),
+              ),
+            ),
+          ],
+        ),
+      ];
+
+    if (widget.formName == FormName.otp) {
+      widgets = [
+        ...widgets,
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: List.generate(
+            focusNodes.length + 1,
+            (index) => buildOPTTextField(index: index),
+          ),
+
+/*
+          [
+            OTPTextField(
+              autofocus: true,
+              onChange: (value) {
+                //TODO store value
+                nextField(value: value, focusNode: pin2FocusNode);
+              },
+            ),
+            OTPTextField(
+              autofocus: false,
+              focusNode: pin2FocusNode,
+              onChange: (value) {
+                //TODO store value
+                nextField(value: value, focusNode: pin3FocusNode);
+              },
+            ),
+            OTPTextField(
+              autofocus: false,
+              focusNode: pin3FocusNode,
+              onChange: (value) {
+                //TODO store value
+                nextField(value: value, focusNode: pin4FocusNode);
+              },
+            ),
+            OTPTextField(
+              autofocus: false,
+              focusNode: pin4FocusNode,
+              onChange: (value) {
+                //TODO store value
+                pin4FocusNode.unfocus();
+              },
+            ),
+          ],
+*/
+        ),
+      ];
+    } else {
+      widgets = [
+        ...widgets,
+        FormError(errors: errors),
+      ];
+    }
+
+    widgets = [
+      ...widgets,
+      SizedBox(height: pHeight(widget.beforeSubmit)),
+      DefaultButton(
+        text: 'Continue',
+        onPress: () {
+          if (_formKey.currentState.validate()) {
+            _formKey.currentState.save();
+            //TODO if everything is valid then go to next screen
+            Navigator.pushNamed(context, widget.routeName);
+          }
+        },
+      ),
+      SizedBox(height: pHeight(widget.afterSubmit)),
+    ];
+
+    if (widget.formName == FormName.signUp ||
+        widget.formName == FormName.signIn) {
+      widgets = [
+        ...widgets,
+        SocialRow(),
+        SizedBox(height: getProportionateScreenHeight(20)),
+      ];
+    }
 
     switch (widget.formName) {
       case FormName.signUp:
-        widgets = [
-          ...widgets,
-          FormError(errors: errors),
-          SizedBox(height: getProportionateScreenHeight(30)),
-          DefaultButton(
-            text: 'Continue',
-            onPress: () {
-              if (_formKey.currentState.validate()) {
-                _formKey.currentState.save();
-                //TODO if everything is valid then go to success screen
-                Navigator.pushNamed(context, widget.routeName);
-              }
-            },
-          ),
-          SizedBox(height: SizeConfig.screenHeight * 0.07),
-          SocialRow(),
-          SizedBox(height: getProportionateScreenHeight(20)),
-          Text(
-            'By continuing you confirm that you agree \nwith our Term and Condition',
-            textAlign: TextAlign.center,
-          ),
-        ];
-        break;
       case FormName.completeProfile:
         widgets = [
           ...widgets,
-          FormError(errors: errors),
-          SizedBox(height: getProportionateScreenHeight(40)),
-          DefaultButton(
-            text: 'Continue',
-            onPress: () {
-              if (_formKey.currentState.validate()) {
-                _formKey.currentState.save();
-                //TODO if everything is valid then go to success screen
-                Navigator.pushNamed(context, widget.routeName);
-              }
-            },
-          ),
-          SizedBox(height: getProportionateScreenHeight(30)),
           Text(
             'By continuing you confirm that you agree \nwith our Term and Condition',
             textAlign: TextAlign.center,
@@ -307,68 +467,25 @@ class _FormBuilderState extends State<FormBuilder> {
         ];
         break;
       case FormName.signIn:
-        widgets = [
-          ...widgets,
-          Row(
-            children: [
-              Checkbox(
-                value: remember,
-                activeColor: kPrimaryColor,
-                onChanged: (value) {
-                  setState(() {
-                    remember = value;
-                  });
-                },
-              ),
-              Text("Remember me"),
-              Spacer(),
-              GestureDetector(
-                onTap: () => Navigator.pushNamed(
-                    context, ForgotPasswordScreen.routeName),
-                child: Text(
-                  "Forgot password",
-                  style: TextStyle(decoration: TextDecoration.underline),
-                ),
-              ),
-            ],
-          ),
-          FormError(errors: errors),
-          SizedBox(height: getProportionateScreenHeight(30)),
-          DefaultButton(
-            text: 'Continue',
-            onPress: () {
-              if (_formKey.currentState.validate()) {
-                _formKey.currentState.save();
-                //TODO if everything is valid then go to success screen
-                Navigator.pushNamed(context, widget.routeName);
-              }
-            },
-          ),
-          SizedBox(height: SizeConfig.screenHeight * 0.08),
-          SocialRow(),
-          SizedBox(height: getProportionateScreenHeight(20)),
-          NoAccountText(),
-        ];
-        break;
       case FormName.forgotPassword:
         widgets = [
           ...widgets,
-          FormError(errors: errors),
-          SizedBox(height: SizeConfig.screenHeight * 0.1),
-          DefaultButton(
-            text: 'Continue',
-            onPress: () {
-              if (_formKey.currentState.validate()) {
-                _formKey.currentState.save();
-                //TODO if everything is valid then go to success screen
-                Navigator.pushNamed(context, widget.routeName);
-              }
-            },
-          ),
-          SizedBox(height: SizeConfig.screenHeight * 0.1),
           NoAccountText(),
         ];
         break;
+      case FormName.otp:
+        widgets = [
+          ...widgets,
+          GestureDetector(
+            onTap: () {
+              //TODO Resend your OTP
+            },
+            child: Text(
+              'Reset OTP Code',
+              style: TextStyle(decoration: TextDecoration.underline),
+            ),
+          ),
+        ];
     }
 
     return Form(

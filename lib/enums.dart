@@ -13,4 +13,5 @@ enum FormName {
   signIn,
   forgotPassword,
   completeProfile,
+  otp,
 }

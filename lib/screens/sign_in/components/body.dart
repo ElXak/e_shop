@@ -20,6 +20,8 @@ class Body extends StatelessWidget {
           TextFieldType.email,
           TextFieldType.password,
         ],
+        beforeSubmit: 30,
+        afterSubmit: 0.08,
         routeName: LoginSuccessScreen.routeName,
       ),
     );

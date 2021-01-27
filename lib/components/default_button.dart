@@ -8,10 +8,12 @@ class DefaultButton extends StatelessWidget {
     Key key,
     this.text,
     this.onPress,
+    this.after,
   }) : super(key: key);
 
   final String text;
   final Function onPress;
+  final double after;
 
   @override
   Widget build(BuildContext context) {

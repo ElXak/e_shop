@@ -20,6 +20,8 @@ class Body extends StatelessWidget {
           TextFieldType.password,
           TextFieldType.confirmPassword
         ],
+        beforeSubmit: 30,
+        afterSubmit: 0.07,
         routeName: CompleteProfileScreen.routeName,
       ),
     );

@@ -21,6 +21,8 @@ class Body extends StatelessWidget {
           TextFieldType.phoneNumber,
           TextFieldType.address,
         ],
+        beforeSubmit: 40,
+        afterSubmit: 30,
         routeName: OTPScreen.routeName,
       ),
     );

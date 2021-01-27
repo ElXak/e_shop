@@ -18,6 +18,8 @@ class Body extends StatelessWidget {
         textFields: [
           TextFieldType.email,
         ],
+        beforeSubmit: 0.1,
+        afterSubmit: 0.1,
       ),
     );
   }
