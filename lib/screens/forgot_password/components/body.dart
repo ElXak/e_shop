@@ -10,9 +10,11 @@ class Body extends StatelessWidget {
     return ScrollingBody(
       child: FormBuilder(
         formName: FormName.forgotPassword,
+        beforeHeader: 0.04,
         title: 'Forgot Password',
         text:
             'Please enter your email and we will send \nyou a link to return to your account',
+        afterHeader: 0.1,
         textFields: [
           TextFieldType.email,
         ],

@@ -11,8 +11,10 @@ class Body extends StatelessWidget {
     return ScrollingBody(
       child: FormBuilder(
         formName: FormName.signUp,
+        beforeHeader: 0.02,
         title: 'Register Account',
         text: 'Complete your details or continue \nwith social media',
+        afterHeader: 0.07,
         textFields: [
           TextFieldType.email,
           TextFieldType.password,

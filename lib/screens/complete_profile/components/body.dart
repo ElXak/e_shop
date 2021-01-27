@@ -1,8 +1,9 @@
-import 'package:e_shop/components/form_builder.dart';
-import 'package:e_shop/enums.dart';
 import 'package:flutter/material.dart';
 
 import '../../../components/scrolling_body.dart';
+import '../../../components/form_builder.dart';
+import '../../../enums.dart';
+import '../../otp/otp_screen.dart';
 
 class Body extends StatelessWidget {
   @override
@@ -10,14 +11,17 @@ class Body extends StatelessWidget {
     return ScrollingBody(
       child: FormBuilder(
         formName: FormName.completeProfile,
+        beforeHeader: 0.02,
         title: 'Complete Profile',
         text: 'Complete your details or continue \nwith social media',
+        afterHeader: 0.05,
         textFields: [
           TextFieldType.firstName,
           TextFieldType.lastName,
           TextFieldType.phoneNumber,
           TextFieldType.address,
         ],
+        routeName: OTPScreen.routeName,
       ),
     );
   }

@@ -8,17 +8,21 @@ import 'default_button.dart';
 import 'custom_text_field.dart';
 import 'no_account_text.dart';
 import 'social_row.dart';
+import 'form_header.dart';
 import '../screens/forgot_password/forgot_password_screen.dart';
 
 class FormBuilder extends StatefulWidget {
   FormBuilder({
     this.formName,
+    this.beforeHeader,
     this.title,
     this.text,
+    this.afterHeader,
     this.routeName,
     this.textFields,
   });
 
+  final double beforeHeader, afterHeader;
   final FormName formName;
   final String title, text, routeName;
   final List<TextFieldType> textFields;
@@ -244,40 +248,14 @@ class _FormBuilderState extends State<FormBuilder> {
 
   @override
   Widget build(BuildContext context) {
-    switch (widget.formName) {
-      case FormName.signUp:
-        widgets = [
-          SizedBox(height: SizeConfig.screenHeight * 0.02),
-          Text(widget.title, style: headingStyle),
-          Text(widget.text, textAlign: TextAlign.center),
-          SizedBox(height: SizeConfig.screenHeight * 0.07),
-        ];
-        break;
-      case FormName.completeProfile:
-        widgets = [
-          SizedBox(height: SizeConfig.screenHeight * 0.02),
-          Text(widget.title, style: headingStyle),
-          Text(widget.text, textAlign: TextAlign.center),
-          SizedBox(height: SizeConfig.screenHeight * 0.05)
-        ];
-        break;
-      case FormName.signIn:
-        widgets = [
-          SizedBox(height: SizeConfig.screenHeight * 0.04),
-          Text(widget.title, style: headingStyle),
-          Text(widget.text, textAlign: TextAlign.center),
-          SizedBox(height: SizeConfig.screenHeight * 0.08),
-        ];
-        break;
-      case FormName.forgotPassword:
-        widgets = [
-          SizedBox(height: SizeConfig.screenHeight * 0.04),
-          Text(widget.title, style: headingStyle),
-          Text(widget.text, textAlign: TextAlign.center),
-          SizedBox(height: SizeConfig.screenHeight * 0.1),
-        ];
-        break;
-    }
+    widgets = [
+      FormHeader(
+        before: widget.beforeHeader,
+        title: widget.title,
+        text: widget.text,
+        after: widget.afterHeader,
+      ),
+    ];
 
     addTextFields();
 

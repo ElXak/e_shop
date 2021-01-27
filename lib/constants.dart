@@ -14,11 +14,25 @@ const kTextColor = Color(0xFF757575);
 
 const kAnimationDuration = Duration(milliseconds: 200);
 
-final headingStyle = TextStyle(
+final kHeadingStyle = TextStyle(
   fontSize: getProportionateScreenWidth(28),
   fontWeight: FontWeight.bold,
   color: Colors.black,
   height: 1.5,
+);
+
+final kOtpInputDecoration = InputDecoration(
+  contentPadding: EdgeInsets.symmetric(
+    vertical: getProportionateScreenWidth(15),
+  ),
+  enabledBorder: kOutlineInputBorder,
+  focusedBorder: kOutlineInputBorder,
+  border: kOutlineInputBorder,
+);
+
+final kOutlineInputBorder = OutlineInputBorder(
+  borderRadius: BorderRadius.circular(15),
+  borderSide: BorderSide(color: kTextColor),
 );
 
 // Form Error
