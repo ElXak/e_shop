@@ -11,6 +11,7 @@ import 'social_row.dart';
 import 'form_title.dart';
 import 'form_text.dart';
 import '../screens/forgot_password/forgot_password_screen.dart';
+import 'text_field_properties.dart';
 
 class FormBuilder extends StatefulWidget {
   FormBuilder({
@@ -53,6 +54,8 @@ class _FormBuilderState extends State<FormBuilder> {
   final List<String> errors = [];
   List<Widget> widgets;
 
+  Map<TextFieldType, TextFieldProperties> _textFieldData;
+
   @override
   void initState() {
     super.initState();
@@ -64,6 +67,151 @@ class _FormBuilderState extends State<FormBuilder> {
       pin3FocusNode,
       pin4FocusNode,
     ];
+    _textFieldData = {
+      TextFieldType.email: TextFieldProperties(
+        type: TextFieldType.email,
+        label: 'Email',
+        hint: 'Enter your email',
+        icon: 'assets/icons/Mail.svg',
+        validator: (value) {
+          if (value.isEmpty) {
+            addError(error: kEmailNullError);
+            return '';
+          } else if (!emailValidatorRegExp.hasMatch(value)) {
+            addError(error: kInvalidEmailError);
+            return '';
+          }
+          return null;
+        },
+        onChange: (value) {
+          if (value.isNotEmpty) {
+            removeError(error: kEmailNullError);
+          }
+          if (emailValidatorRegExp.hasMatch(value)) {
+            removeError(error: kInvalidEmailError);
+          }
+        },
+        onSave: (newValue) => email = newValue,
+      ),
+      TextFieldType.password: TextFieldProperties(
+        type: TextFieldType.password,
+        label: 'Password',
+        hint: 'Enter your password',
+        icon: 'assets/icons/Lock.svg',
+        validator: (value) {
+          if (value.isEmpty) {
+            addError(error: kPassNullError);
+            return '';
+          } else if (value.length < 8) {
+            addError(error: kShortPassError);
+            return '';
+          } else if (widget.textFields
+                  .contains(TextFieldType.confirmPassword) &&
+              confirmPassword != value) {
+            addError(error: kMatchPassError);
+            return '';
+          }
+          return null;
+        },
+        onChange: (value) {
+          if (value.isNotEmpty) {
+            removeError(error: kPassNullError);
+          }
+          if (value.length >= 8) {
+            removeError(error: kShortPassError);
+          }
+          if (confirmPassword == value) {
+            removeError(error: kMatchPassError);
+          }
+          password = value;
+        },
+        onSave: (newValue) => password = newValue,
+      ),
+      TextFieldType.confirmPassword: TextFieldProperties(
+        type: TextFieldType.password,
+        label: 'Confirm Password',
+        hint: 'Re-enter your password',
+        icon: 'assets/icons/Lock.svg',
+        validator: (value) {
+          if (password != value) {
+            addError(error: kMatchPassError);
+            return '';
+          }
+          return null;
+        },
+        onChange: (value) {
+          if (password == value) {
+            removeError(error: kMatchPassError);
+          }
+          confirmPassword = value;
+        },
+        onSave: (newValue) => confirmPassword = newValue,
+      ),
+      TextFieldType.firstName: TextFieldProperties(
+        type: TextFieldType.firstName,
+        label: 'First Name',
+        hint: 'Enter your first name',
+        icon: 'assets/icons/User.svg',
+        validator: (value) {
+          if (value.isEmpty) {
+            addError(error: kNameNullError);
+            return '';
+          }
+          return null;
+        },
+        onChange: (value) {
+          if (value.isNotEmpty) {
+            removeError(error: kNameNullError);
+          }
+        },
+        onSave: (newValue) => firstName = newValue,
+      ),
+      TextFieldType.lastName: TextFieldProperties(
+        type: TextFieldType.lastName,
+        label: 'Last Name',
+        hint: 'Enter your last name',
+        icon: 'assets/icons/User.svg',
+        onSave: (newValue) => lastName = newValue,
+      ),
+      TextFieldType.phoneNumber: TextFieldProperties(
+        type: TextFieldType.phoneNumber,
+        label: 'Phone Number',
+        hint: 'Enter your phone number',
+        icon: 'assets/icons/Phone.svg',
+        validator: (value) {
+          if (value.isEmpty) {
+            addError(error: kPhoneNumberNullError);
+            return '';
+          }
+          return null;
+        },
+        onChange: (value) {
+          if (value.isNotEmpty) {
+            removeError(error: kPhoneNumberNullError);
+          }
+        },
+        onSave: (newValue) => phoneNumber = newValue,
+      ),
+      TextFieldType.address: TextFieldProperties(
+        type: TextFieldType.address,
+        label: 'Address',
+        hint: 'Enter your address',
+        icon: 'assets/icons/Location point.svg',
+        validator: (value) {
+          if (value.isEmpty) {
+            addError(error: kAddressNullError);
+            return '';
+          }
+          return null;
+        },
+        onChange: (value) {
+          if (value.isNotEmpty) {
+            removeError(error: kAddressNullError);
+          }
+        },
+        onSave: (newValue) => address = newValue,
+      ),
+    };
   }
 
   @override
@@ -118,192 +266,16 @@ class _FormBuilderState extends State<FormBuilder> {
     }
   }
 
-  String validator(value, TextFieldType type) {
-    switch (type) {
-      case TextFieldType.email:
-        if (value.isEmpty) {
-          addError(error: kEmailNullError);
-          return '';
-        } else if (!emailValidatorRegExp.hasMatch(value)) {
-          addError(error: kInvalidEmailError);
-          return '';
-        }
-        break;
-      case TextFieldType.password:
-        if (value.isEmpty) {
-          addError(error: kPassNullError);
-          return '';
-        } else if (value.length < 8) {
-          addError(error: kShortPassError);
-          return '';
-        } else if (widget.textFields.contains(TextFieldType.confirmPassword) &&
-            confirmPassword != value) {
-          addError(error: kMatchPassError);
-          return '';
-        }
-        break;
-      case TextFieldType.confirmPassword:
-        if (password != value) {
-          addError(error: kMatchPassError);
-          return '';
-        }
-        break;
-      case TextFieldType.firstName:
-        if (value.isEmpty) {
-          addError(error: kNameNullError);
-          return '';
-        }
-        break;
-      case TextFieldType.phoneNumber:
-        if (value.isEmpty) {
-          addError(error: kPhoneNumberNullError);
-          return '';
-        }
-        break;
-      case TextFieldType.address:
-        if (value.isEmpty) {
-          addError(error: kAddressNullError);
-          return '';
-        }
-    }
-
-    return null;
-  }
-
-  void onChange(value, TextFieldType type) {
-    switch (type) {
-      case TextFieldType.email:
-        if (value.isNotEmpty) {
-          removeError(error: kEmailNullError);
-        }
-        if (emailValidatorRegExp.hasMatch(value)) {
-          removeError(error: kInvalidEmailError);
-        }
-        break;
-      case TextFieldType.password:
-        if (value.isNotEmpty) {
-          removeError(error: kPassNullError);
-        }
-        if (value.length >= 8) {
-          removeError(error: kShortPassError);
-        }
-        if (confirmPassword == value) {
-          removeError(error: kMatchPassError);
-        }
-        password = value;
-        break;
-      case TextFieldType.confirmPassword:
-        if (password == value) {
-          removeError(error: kMatchPassError);
-        }
-        confirmPassword = value;
-        break;
-      case TextFieldType.firstName:
-        if (value.isNotEmpty) {
-          removeError(error: kNameNullError);
-        }
-        break;
-      case TextFieldType.phoneNumber:
-        if (value.isNotEmpty) {
-          removeError(error: kPhoneNumberNullError);
-        }
-        break;
-      case TextFieldType.address:
-        if (value.isNotEmpty) {
-          removeError(error: kAddressNullError);
-        }
-    }
-  }
-
-  List<Widget> textFields() {
-    List<Widget> listTextFields = [];
-    int fieldCounter = 1;
-    for (TextFieldType textField in widget.textFields) {
-      switch (textField) {
-        case TextFieldType.email:
-          listTextFields.add(CustomTextField(
-            type: TextFieldType.email,
-            label: 'Email',
-            hint: 'Enter your email',
-            icon: 'assets/icons/Mail.svg',
-            validator: (value) => validator(value, TextFieldType.email),
-            onChange: (value) => onChange(value, TextFieldType.email),
-            onSave: (newValue) => email = newValue,
-          ));
-          break;
-        case TextFieldType.password:
-          listTextFields.add(CustomTextField(
-            type: TextFieldType.password,
-            label: 'Password',
-            hint: 'Enter your password',
-            icon: 'assets/icons/Lock.svg',
-            validator: (value) => validator(value, TextFieldType.password),
-            onChange: (value) => onChange(value, TextFieldType.password),
-            onSave: (newValue) => password = newValue,
-          ));
-          break;
-        case TextFieldType.confirmPassword:
-          listTextFields.add(CustomTextField(
-            type: TextFieldType.password,
-            label: 'Confirm Password',
-            hint: 'Re-enter your password',
-            icon: 'assets/icons/Lock.svg',
-            validator: (value) =>
-                validator(value, TextFieldType.confirmPassword),
-            onChange: (value) => onChange(value, TextFieldType.confirmPassword),
-            onSave: (newValue) => confirmPassword = newValue,
-          ));
-          break;
-        case TextFieldType.firstName:
-          listTextFields.add(CustomTextField(
-            type: TextFieldType.firstName,
-            label: 'First Name',
-            hint: 'Enter your first name',
-            icon: 'assets/icons/User.svg',
-            validator: (value) => validator(value, TextFieldType.firstName),
-            onChange: (value) => onChange(value, TextFieldType.firstName),
-            onSave: (newValue) => firstName = newValue,
-          ));
-          break;
-        case TextFieldType.lastName:
-          listTextFields.add(CustomTextField(
-            type: TextFieldType.lastName,
-            label: 'Last Name',
-            hint: 'Enter your last name',
-            icon: 'assets/icons/User.svg',
-            onSave: (newValue) => lastName = newValue,
-          ));
-          break;
-        case TextFieldType.phoneNumber:
-          listTextFields.add(CustomTextField(
-            type: TextFieldType.phoneNumber,
-            label: 'Phone Number',
-            hint: 'Enter your phone number',
-            icon: 'assets/icons/Phone.svg',
-            validator: (value) => validator(value, TextFieldType.phoneNumber),
-            onChange: (value) => onChange(value, TextFieldType.phoneNumber),
-            onSave: (newValue) => phoneNumber = newValue,
-          ));
-          break;
-        case TextFieldType.address:
-          listTextFields.add(CustomTextField(
-            type: TextFieldType.address,
-            label: 'Address',
-            hint: 'Enter your address',
-            icon: 'assets/icons/Location point.svg',
-            validator: (value) => validator(value, TextFieldType.address),
-            onChange: (value) => onChange(value, TextFieldType.address),
-            onSave: (newValue) => address = newValue,
-          ));
-          break;
-      }
-
-      if (fieldCounter < 4)
-        listTextFields.add(SizedBox(height: getProportionateScreenHeight(30)));
-      fieldCounter++;
-    }
-
-    return listTextFields;
+  CustomTextField buildTextField({TextFieldType textFieldType}) {
+    return CustomTextField(
+      type: _textFieldData[textFieldType].type,
+      label: _textFieldData[textFieldType].label,
+      hint: _textFieldData[textFieldType].hint,
+      icon: _textFieldData[textFieldType].icon,
+      validator: _textFieldData[textFieldType].validator,
+      onChange: _textFieldData[textFieldType].onChange,
+      onSave: _textFieldData[textFieldType].onSave,
+    );
   }
 
   Row buildTimer() {
@@ -344,7 +316,12 @@ class _FormBuilderState extends State<FormBuilder> {
     } else {
       widgets = [
         ...widgets,
-        ...textFields(),
+        ...List.generate(
+          widget.textFields.length,
+          (index) => buildTextField(
+            textFieldType: widget.textFields[index],
+          ),
+        )
       ];
     }
 
@@ -385,42 +362,6 @@ class _FormBuilderState extends State<FormBuilder> {
             focusNodes.length + 1,
             (index) => buildOPTTextField(index: index),
           ),
-
-/*
-          [
-            OTPTextField(
-              autofocus: true,
-              onChange: (value) {
-                //TODO store value
-                nextField(value: value, focusNode: pin2FocusNode);
-              },
-            ),
-            OTPTextField(
-              autofocus: false,
-              focusNode: pin2FocusNode,
-              onChange: (value) {
-                //TODO store value
-                nextField(value: value, focusNode: pin3FocusNode);
-              },
-            ),
-            OTPTextField(
-              autofocus: false,
-              focusNode: pin3FocusNode,
-              onChange: (value) {
-                //TODO store value
-                nextField(value: value, focusNode: pin4FocusNode);
-              },
-            ),
-            OTPTextField(
-              autofocus: false,
-              focusNode: pin4FocusNode,
-              onChange: (value) {
-                //TODO store value
-                pin4FocusNode.unfocus();
-              },
-            ),
-          ],
-*/
         ),
       ];
     } else {
@@ -432,18 +373,22 @@ class _FormBuilderState extends State<FormBuilder> {
 
     widgets = [
       ...widgets,
-      SizedBox(height: pHeight(widget.beforeSubmit)),
-      DefaultButton(
-        text: 'Continue',
-        onPress: () {
-          if (_formKey.currentState.validate()) {
-            _formKey.currentState.save();
-            //TODO if everything is valid then go to next screen
-            Navigator.pushNamed(context, widget.routeName);
-          }
-        },
+      Padding(
+        padding: EdgeInsets.only(
+          top: pHeight(widget.beforeSubmit),
+          bottom: pHeight(widget.afterSubmit),
+        ),
+        child: DefaultButton(
+          text: 'Continue',
+          onPress: () {
+            if (_formKey.currentState.validate()) {
+              _formKey.currentState.save();
+              //TODO if everything is valid then go to next screen
+              Navigator.pushNamed(context, widget.routeName);
+            }
+          },
+        ),
       ),
-      SizedBox(height: pHeight(widget.afterSubmit)),
     ];
 
     if (widget.formName == FormName.signUp ||

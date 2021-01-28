@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../enums.dart';
+import '../size_config.dart';
 import 'custom_suffix_icon.dart';
 
 class CustomTextField extends StatelessWidget {
@@ -38,17 +39,21 @@ class CustomTextField extends StatelessWidget {
         inputType = TextInputType.text;
     }
 
-    return TextFormField(
-      obscureText: type == TextFieldType.password ? true : false,
-      keyboardType: inputType,
-      validator: validator,
-      onChanged: onChange,
-      onSaved: onSave,
-      decoration: InputDecoration(
+    return Padding(
+      padding: EdgeInsets.only(bottom: getProportionateScreenHeight(30)),
+      child: TextFormField(
+        obscureText: type == TextFieldType.password ? true : false,
+        keyboardType: inputType,
+        validator: validator,
+        onChanged: onChange,
+        onSaved: onSave,
+        decoration: InputDecoration(
           labelText: label,
           hintText: hint,
           floatingLabelBehavior: FloatingLabelBehavior.always,
-          suffixIcon: CustomSuffixIcon(svgIcon: icon)),
+          suffixIcon: CustomSuffixIcon(svgIcon: icon),
+        ),
+      ),
     );
   }
 }
