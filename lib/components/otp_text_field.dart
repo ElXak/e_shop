@@ -6,14 +6,12 @@ import '../size_config.dart';
 class OTPTextField extends StatelessWidget {
   const OTPTextField({
     Key key,
-    this.index,
     this.autofocus,
     this.focusNode,
     this.onChange,
     this.onSave,
   }) : super(key: key);
 
-  final int index;
   final bool autofocus;
   final FocusNode focusNode;
   final Function onChange;

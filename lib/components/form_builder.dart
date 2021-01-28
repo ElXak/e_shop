@@ -7,6 +7,7 @@ import 'form_error.dart';
 import 'default_button.dart';
 import 'custom_text_field.dart';
 import 'no_account_text.dart';
+import 'otp_text_field.dart';
 import 'social_row.dart';
 import 'form_title.dart';
 import 'form_text.dart';
@@ -223,24 +224,16 @@ class _FormBuilderState extends State<FormBuilder> {
     super.dispose();
   }
 
-  SizedBox buildOPTTextField({int index}) {
-    return SizedBox(
-      width: getProportionateScreenWidth(60),
-      child: TextFormField(
-        autofocus: index == 0 ? true : false,
-        focusNode: index == 0 ? null : focusNodes[index - 1],
-        obscureText: true,
-        keyboardType: TextInputType.number,
-        style: TextStyle(fontSize: 24),
-        textAlign: TextAlign.center,
-        decoration: kOtpInputDecoration,
-        onChanged: (value) {
-          //TODO store value
-          index < focusNodes.length
-              ? nextField(value: value, focusNode: focusNodes[index])
-              : focusNodes[index - 1].unfocus();
-        },
-      ),
+  OTPTextField buildOPTTextField({int index}) {
+    return OTPTextField(
+      autofocus: index == 0 ? true : false,
+      focusNode: index == 0 ? null : focusNodes[index - 1],
+      onChange: (value) {
+        //TODO store value
+        index < focusNodes.length
+            ? nextField(value: value, focusNode: focusNodes[index])
+            : focusNodes[index - 1].unfocus();
+      },
     );
   }
 
