@@ -11,10 +11,10 @@ class Body extends StatelessWidget {
     return ScrollingBody(
       child: FormBuilder(
         formName: FormName.completeProfile,
-        beforeHeader: 0.02,
+        beforeHeader: 0.04,
         title: 'Complete Profile',
         text: 'Complete your details or continue \nwith social media',
-        afterHeader: 0.05,
+        afterHeader: 0.08,
         textFields: [
           TextFieldType.firstName,
           TextFieldType.lastName,

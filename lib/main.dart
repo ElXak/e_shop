@@ -4,9 +4,7 @@ import 'screens/splash/splash_screen.dart';
 import 'routs.dart';
 import 'theme.dart';
 
-void main() {
-  runApp(MyApp());
-}
+void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.

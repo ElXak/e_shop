@@ -10,7 +10,7 @@ class DiscountBanner extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
+      margin: EdgeInsets.all(getProportionateScreenWidth(20)),
       padding: EdgeInsets.symmetric(
         horizontal: getProportionateScreenWidth(20),
         vertical: getProportionateScreenWidth(15),
@@ -23,12 +23,15 @@ class DiscountBanner extends StatelessWidget {
       ),
       child: Text.rich(
         TextSpan(
-          text: 'A Summer Surprise\n',
           style: TextStyle(color: Colors.white),
           children: [
+            TextSpan(text: 'A Summer Surprise\n'),
             TextSpan(
               text: 'Cashback 20%',
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+              style: TextStyle(
+                fontSize: getProportionateScreenWidth(24),
+                fontWeight: FontWeight.bold,
+              ),
             ),
           ],
         ),

@@ -1,4 +1,4 @@
-import 'package:e_shop/enums.dart';
+import '../enums.dart';
 
 class TextFieldProperties {
   TextFieldProperties({

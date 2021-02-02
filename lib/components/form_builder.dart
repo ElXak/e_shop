@@ -277,7 +277,7 @@ class _FormBuilderState extends State<FormBuilder> {
       children: [
         Text('This code will expire in '),
         TweenAnimationBuilder(
-          tween: Tween(begin: 30.0, end: 0),
+          tween: Tween(begin: 30.0, end: 0.0),
           duration: Duration(seconds: 30), // because we allow user 30s
           builder: (context, vale, child) => Text(
             '00:${vale.toInt()}',
@@ -401,6 +401,7 @@ class _FormBuilderState extends State<FormBuilder> {
           Text(
             'By continuing you confirm that you agree \nwith our Term and Condition',
             textAlign: TextAlign.center,
+            style: Theme.of(context).textTheme.caption,
           ),
         ];
         break;

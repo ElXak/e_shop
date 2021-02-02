@@ -8,6 +8,7 @@ import 'screens/sign_up/sign_up_screen.dart';
 import 'screens/complete_profile/complete_profile_screen.dart';
 import 'screens/otp/otp_screen.dart';
 import 'screens/home/home_screen.dart';
+import 'screens/details/details_screen.dart';
 
 // We use name routes
 // All our routes will be available here
@@ -20,4 +21,5 @@ final Map<String, WidgetBuilder> routes = {
   CompleteProfileScreen.routeName: (context) => CompleteProfileScreen(),
   OTPScreen.routeName: (context) => OTPScreen(),
   HomeScreen.routeName: (context) => HomeScreen(),
+  DetailsScreen.routeName: (context) => DetailsScreen(),
 };

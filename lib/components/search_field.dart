@@ -12,7 +12,6 @@ class SearchField extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: SizeConfig.screenWidth * 0.6,
-      // height: 50,
       decoration: BoxDecoration(
         color: kSecondaryColor.withOpacity(0.1),
         borderRadius: BorderRadius.circular(15),
@@ -20,8 +19,10 @@ class SearchField extends StatelessWidget {
       child: TextField(
         onChanged: (value) {
           //TODO Search value
+          print(value);
         },
         decoration: InputDecoration(
+          border: InputBorder.none,
           enabledBorder: InputBorder.none,
           focusedBorder: InputBorder.none,
           hintText: 'Search Product',

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 class Product {
+  final int id;
   final String title, description;
   final List<String> images;
   final List<Color> colors;
@@ -8,14 +9,15 @@ class Product {
   final bool isFavorite, isPopular;
 
   Product({
+    @required this.id,
     @required this.title,
     @required this.description,
     @required this.images,
     @required this.colors,
     @required this.price,
-    this.rating,
-    this.isFavorite,
-    this.isPopular,
+    this.rating = 0.0,
+    this.isFavorite = false,
+    this.isPopular = false,
   });
 }
 
@@ -23,6 +25,7 @@ class Product {
 
 List<Product> demoProducts = [
   Product(
+    id: 1,
     title: 'Wireless Controller for PS4',
     description: description,
     images: [
@@ -43,6 +46,7 @@ List<Product> demoProducts = [
     isPopular: true,
   ),
   Product(
+    id: 2,
     title: 'Nike Sport White - Man Pant',
     description: description,
     images: [
@@ -60,6 +64,7 @@ List<Product> demoProducts = [
     isPopular: true,
   ),
   Product(
+    id: 3,
     title: 'Gloves XC Omega - Polygon',
     description: description,
     images: [
@@ -77,6 +82,7 @@ List<Product> demoProducts = [
     isPopular: true,
   ),
   Product(
+    id: 4,
     title: 'Logitech Head',
     description: description,
     images: [
@@ -91,8 +97,9 @@ List<Product> demoProducts = [
     price: 20.20,
     rating: 4.1,
     isFavorite: true,
+    isPopular: false,
   ),
 ];
 
 const String description =
-    'Wireless Controller for PS4 gives you what you want in your gaming from over precision';
+    'Wireless Controller for PS4 gives you what you want in your gaming from over precision control your game to sharing...';
