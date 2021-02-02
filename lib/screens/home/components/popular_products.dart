@@ -18,7 +18,7 @@ class PopularProducts extends StatelessWidget {
         SectionTitle(
             title: 'Popular Product',
             onPress: () {
-              //TODO Go to more products
+              //TODO Go to More Popular Products
             }),
         SizedBox(
           height: getProportionateScreenWidth(20),

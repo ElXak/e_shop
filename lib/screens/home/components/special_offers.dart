@@ -15,7 +15,7 @@ class SpecialOffers extends StatelessWidget {
         SectionTitle(
           title: 'Special for you',
           onPress: () {
-            //TODO Go to more offers
+            //TODO Go to More Offers
           },
         ),
         SizedBox(height: getProportionateScreenWidth(20)),
@@ -28,7 +28,7 @@ class SpecialOffers extends StatelessWidget {
                 category: 'Smartphones',
                 numOfBrands: 18,
                 onPress: () {
-                  //TODO Go to category
+                  //TODO Go to Category
                 },
               ),
               SpecialOfferCard(
@@ -36,7 +36,7 @@ class SpecialOffers extends StatelessWidget {
                 category: 'Fashion',
                 numOfBrands: 24,
                 onPress: () {
-                  //TODO Go to category
+                  //TODO Go to Category
                 },
               ),
               SizedBox(width: getProportionateScreenWidth(20)),

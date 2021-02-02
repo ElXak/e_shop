@@ -63,7 +63,7 @@ class ProductCard extends StatelessWidget {
                   InkWell(
                     borderRadius: BorderRadius.circular(50),
                     onTap: () {
-                      //TODO add to the favorites and like it
+                      //TODO add to the favorites
                     },
                     child: Container(
                       padding: EdgeInsets.all(getProportionateScreenWidth(8)),

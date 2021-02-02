@@ -229,7 +229,7 @@ class _FormBuilderState extends State<FormBuilder> {
       autofocus: index == 0 ? true : false,
       focusNode: index == 0 ? null : focusNodes[index - 1],
       onChange: (value) {
-        //TODO store value
+        //TODO store Entered OTP value
         index < focusNodes.length
             ? nextField(value: value, focusNode: focusNodes[index])
             : focusNodes[index - 1].unfocus();
@@ -284,7 +284,7 @@ class _FormBuilderState extends State<FormBuilder> {
             style: TextStyle(color: kPrimaryColor),
           ),
           onEnd: () {
-            //TODO clear OTP code in server
+            //TODO clear OTP code in server and inform user
           },
         ),
       ],
@@ -376,7 +376,7 @@ class _FormBuilderState extends State<FormBuilder> {
           onPress: () {
             if (_formKey.currentState.validate()) {
               _formKey.currentState.save();
-              //TODO if everything is valid then go to next screen
+              //TODO Validate the form by DB or json
               Navigator.pushNamed(context, widget.routeName);
             }
           },
