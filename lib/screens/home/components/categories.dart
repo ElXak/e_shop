@@ -18,9 +18,18 @@ class Categories extends StatelessWidget {
           (index) => CategoryCard(
             icon: categories[index]['icon'],
             text: categories[index]['text'],
+            //TODO category routeName instead null
+            onPress: () => Navigator.pushNamed(
+              context,
+              null,
+              // Pass product to details screen
+              arguments: categories[index]['id'],
+            ),
+/*
             onPress: () {
-              //TODO Go to Category
+              print(categories[index]['id']);
             },
+*/
           ),
         ),
       ),

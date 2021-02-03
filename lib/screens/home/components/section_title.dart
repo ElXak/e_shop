@@ -19,11 +19,14 @@ class SectionTitle extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(
-            title,
-            style: TextStyle(
-              fontSize: getProportionateScreenWidth(18),
-              color: Colors.black,
+          GestureDetector(
+            onTap: onPress,
+            child: Text(
+              title,
+              style: TextStyle(
+                fontSize: getProportionateScreenWidth(18),
+                color: Colors.black,
+              ),
             ),
           ),
           GestureDetector(

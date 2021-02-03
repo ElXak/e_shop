@@ -14,9 +14,8 @@ class SpecialOffers extends StatelessWidget {
       children: [
         SectionTitle(
           title: 'Special for you',
-          onPress: () {
-            //TODO Go to More Offers
-          },
+          //TODO offers routeName instead null
+          onPress: () => Navigator.pushNamed(context, null),
         ),
         SizedBox(height: getProportionateScreenWidth(20)),
         SingleChildScrollView(
@@ -27,17 +26,25 @@ class SpecialOffers extends StatelessWidget {
                 image: 'assets/images/Image Banner 2.png',
                 category: 'Smartphones',
                 numOfBrands: 18,
-                onPress: () {
-                  //TODO Go to Category
-                },
+                //TODO category routeName & category id instead nulls
+                onPress: () => Navigator.pushNamed(
+                  context,
+                  null,
+                  // Pass product to details screen
+                  arguments: null,
+                ),
               ),
               SpecialOfferCard(
                 image: 'assets/images/Image Banner 3.png',
                 category: 'Fashion',
                 numOfBrands: 24,
-                onPress: () {
-                  //TODO Go to Category
-                },
+                //TODO category routeName & category id instead nulls
+                onPress: () => Navigator.pushNamed(
+                  context,
+                  null,
+                  // Pass product to details screen
+                  arguments: null,
+                ),
               ),
               SizedBox(width: getProportionateScreenWidth(20)),
             ],

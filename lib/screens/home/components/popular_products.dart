@@ -16,10 +16,10 @@ class PopularProducts extends StatelessWidget {
     return Column(
       children: [
         SectionTitle(
-            title: 'Popular Product',
-            onPress: () {
-              //TODO Go to More Popular Products
-            }),
+          title: 'Popular Product',
+          //TODO popular products routeName instead null
+          onPress: () => Navigator.pushNamed(context, null),
+        ),
         SizedBox(
           height: getProportionateScreenWidth(20),
         ),
