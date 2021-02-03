@@ -32,12 +32,10 @@ class _ProductImagesState extends State<ProductImages> {
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            ...List.generate(
-              widget.product.images.length,
-              (index) => buildSmallPreview(index),
-            ),
-          ],
+          children: List.generate(
+            widget.product.images.length,
+            (index) => buildSmallPreview(index),
+          ),
         ),
       ],
     );
