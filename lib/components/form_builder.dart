@@ -38,14 +38,8 @@ class FormBuilder extends StatefulWidget {
 
 class _FormBuilderState extends State<FormBuilder> {
   final _formKey = GlobalKey<FormState>();
-  String email;
-  String password;
-  String confirmPassword;
-  String firstName;
-  String lastName;
-  String phoneNumber;
-  String address;
-  bool remember = false;
+  Map<String, dynamic> _formData = {'remember': false};
+  List<String> otp = ['0', '0', '0', '0'];
 
   FocusNode pin2FocusNode;
   FocusNode pin3FocusNode;
@@ -55,7 +49,7 @@ class _FormBuilderState extends State<FormBuilder> {
   final List<String> errors = [];
   List<Widget> widgets;
 
-  Map<TextFieldType, TextFieldProperties> _textFieldData;
+  Map<TextFieldType, TextFieldProperties> _textFieldParams;
 
   @override
   void initState() {
@@ -68,7 +62,7 @@ class _FormBuilderState extends State<FormBuilder> {
       pin3FocusNode,
       pin4FocusNode,
     ];
-    _textFieldData = {
+    _textFieldParams = {
       TextFieldType.email: TextFieldProperties(
         type: TextFieldType.email,
         label: 'Email',
@@ -92,7 +86,8 @@ class _FormBuilderState extends State<FormBuilder> {
             removeError(error: kInvalidEmailError);
           }
         },
-        onSave: (newValue) => email = newValue,
+        // onSave: (newValue) => _formData.email = newValue,
+        onSave: (newValue) => _formData['email'] = newValue,
       ),
       TextFieldType.password: TextFieldProperties(
         type: TextFieldType.password,
@@ -108,7 +103,7 @@ class _FormBuilderState extends State<FormBuilder> {
             return '';
           } else if (widget.textFields
                   .contains(TextFieldType.confirmPassword) &&
-              confirmPassword != value) {
+              _formData['confirmPassword'] != value) {
             addError(error: kMatchPassError);
             return '';
           }
@@ -121,12 +116,12 @@ class _FormBuilderState extends State<FormBuilder> {
           if (value.length >= 8) {
             removeError(error: kShortPassError);
           }
-          if (confirmPassword == value) {
+          if (_formData['confirmPassword'] == value) {
             removeError(error: kMatchPassError);
           }
-          password = value;
+          _formData['password'] = value;
         },
-        onSave: (newValue) => password = newValue,
+        onSave: (newValue) => _formData['password'] = newValue,
       ),
       TextFieldType.confirmPassword: TextFieldProperties(
         type: TextFieldType.password,
@@ -134,19 +129,19 @@ class _FormBuilderState extends State<FormBuilder> {
         hint: 'Re-enter your password',
         icon: 'assets/icons/Lock.svg',
         validator: (value) {
-          if (password != value) {
+          if (_formData['password'] != value) {
             addError(error: kMatchPassError);
             return '';
           }
           return null;
         },
         onChange: (value) {
-          if (password == value) {
+          if (_formData['password'] == value) {
             removeError(error: kMatchPassError);
           }
-          confirmPassword = value;
+          _formData['confirmPassword'] = value;
         },
-        onSave: (newValue) => confirmPassword = newValue,
+        onSave: (newValue) => _formData['confirmPassword'] = newValue,
       ),
       TextFieldType.firstName: TextFieldProperties(
         type: TextFieldType.firstName,
@@ -165,14 +160,14 @@ class _FormBuilderState extends State<FormBuilder> {
             removeError(error: kNameNullError);
           }
         },
-        onSave: (newValue) => firstName = newValue,
+        onSave: (newValue) => _formData['firstName'] = newValue,
       ),
       TextFieldType.lastName: TextFieldProperties(
         type: TextFieldType.lastName,
         label: 'Last Name',
         hint: 'Enter your last name',
         icon: 'assets/icons/User.svg',
-        onSave: (newValue) => lastName = newValue,
+        onSave: (newValue) => _formData['lastName'] = newValue,
       ),
       TextFieldType.phoneNumber: TextFieldProperties(
         type: TextFieldType.phoneNumber,
@@ -191,7 +186,7 @@ class _FormBuilderState extends State<FormBuilder> {
             removeError(error: kPhoneNumberNullError);
           }
         },
-        onSave: (newValue) => phoneNumber = newValue,
+        onSave: (newValue) => _formData['phoneNumber'] = newValue,
       ),
       TextFieldType.address: TextFieldProperties(
         type: TextFieldType.address,
@@ -210,7 +205,7 @@ class _FormBuilderState extends State<FormBuilder> {
             removeError(error: kAddressNullError);
           }
         },
-        onSave: (newValue) => address = newValue,
+        onSave: (newValue) => _formData['address'] = newValue,
       ),
     };
   }
@@ -234,6 +229,7 @@ class _FormBuilderState extends State<FormBuilder> {
             ? nextField(value: value, focusNode: focusNodes[index])
             : focusNodes[index - 1].unfocus();
       },
+      onSave: (value) => otp[index] = value,
     );
   }
 
@@ -261,13 +257,13 @@ class _FormBuilderState extends State<FormBuilder> {
 
   CustomTextField buildTextField({TextFieldType textFieldType}) {
     return CustomTextField(
-      type: _textFieldData[textFieldType].type,
-      label: _textFieldData[textFieldType].label,
-      hint: _textFieldData[textFieldType].hint,
-      icon: _textFieldData[textFieldType].icon,
-      validator: _textFieldData[textFieldType].validator,
-      onChange: _textFieldData[textFieldType].onChange,
-      onSave: _textFieldData[textFieldType].onSave,
+      type: _textFieldParams[textFieldType].type,
+      label: _textFieldParams[textFieldType].label,
+      hint: _textFieldParams[textFieldType].hint,
+      icon: _textFieldParams[textFieldType].icon,
+      validator: _textFieldParams[textFieldType].validator,
+      onChange: _textFieldParams[textFieldType].onChange,
+      onSave: _textFieldParams[textFieldType].onSave,
     );
   }
 
@@ -324,11 +320,11 @@ class _FormBuilderState extends State<FormBuilder> {
         Row(
           children: [
             Checkbox(
-              value: remember,
+              value: _formData['remember'],
               activeColor: kPrimaryColor,
               onChanged: (value) {
                 setState(() {
-                  remember = value;
+                  _formData['remember'] = value;
                 });
               },
             ),
@@ -376,7 +372,9 @@ class _FormBuilderState extends State<FormBuilder> {
           onPress: () {
             if (_formKey.currentState.validate()) {
               _formKey.currentState.save();
-              //TODO Validate the form by DB or json
+              //TODO Validate the _formData by DB or json
+              print(_formData);
+              print(otp);
               Navigator.pushNamed(context, widget.routeName);
             }
           },

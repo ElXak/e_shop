@@ -13,7 +13,7 @@ class Body extends StatelessWidget {
         beforeHeader: 0.05,
         title: 'OTP Verification',
         text:
-            'We sent your code to +992 900 080 ***', //TODO Get phone number from user
+            'We sent your code to ******086', //TODO Get phone number from user
         afterHeader: 0,
         beforeSubmit: 0.15,
         afterSubmit: 0.1,
