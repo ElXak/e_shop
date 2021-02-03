@@ -44,7 +44,7 @@ class Body extends StatelessWidget {
                             left: SizeConfig.screenWidth * 0.15,
                             right: SizeConfig.screenWidth * 0.15,
                             top: getProportionateScreenWidth(15),
-                            bottom: getProportionateScreenWidth(35),
+                            bottom: getProportionateScreenWidth(30),
                           ),
                           child: DefaultButton(
                             text: 'Add to cart',
