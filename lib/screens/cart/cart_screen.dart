@@ -26,7 +26,7 @@ class _CartScreenState extends State<CartScreen> {
 
   AppBar buildAppBar(BuildContext context) {
     return AppBar(
-      title: Column(
+      title: Row(
         children: [
           Text(
             'My Cart',
@@ -34,6 +34,7 @@ class _CartScreenState extends State<CartScreen> {
               color: Colors.black,
             ),
           ),
+          SizedBox(width: 10),
           Text(
             '${demoCart.length} items',
             style: Theme.of(context).textTheme.caption,
