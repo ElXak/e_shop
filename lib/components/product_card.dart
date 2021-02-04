@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import '../constants.dart';
 import '../size_config.dart';
 import '../models/Product.dart';
+import '../screens/details/details_screen.dart';
 
 class ProductCard extends StatelessWidget {
   const ProductCard({
@@ -11,19 +12,21 @@ class ProductCard extends StatelessWidget {
     this.width = 140,
     this.aspectRatio = 1.02,
     @required this.product,
-    @required this.onPress,
   }) : super(key: key);
 
   final double width, aspectRatio;
   final Product product;
-  final GestureTapCallback onPress;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.only(left: getProportionateScreenWidth(20)),
       child: GestureDetector(
-        onTap: onPress,
+        onTap: () => Navigator.pushNamed(
+          context,
+          DetailsScreen.routeName,
+          arguments: ProductDetailsArguments(product: product),
+        ),
         child: SizedBox(
           width: getProportionateScreenWidth(width),
           child: Column(
@@ -37,7 +40,10 @@ class ProductCard extends StatelessWidget {
                     color: kSecondaryColor.withOpacity(0.1),
                     borderRadius: BorderRadius.circular(15),
                   ),
-                  child: Image.asset(product.images[0]),
+                  child: Hero(
+                    tag: product.id.toString(),
+                    child: Image.asset(product.images[0]),
+                  ),
                 ),
               ),
               SizedBox(height: 10),
@@ -67,8 +73,8 @@ class ProductCard extends StatelessWidget {
                     },
                     child: Container(
                       padding: EdgeInsets.all(getProportionateScreenWidth(8)),
-                      width: getProportionateScreenWidth(28),
                       height: getProportionateScreenWidth(28),
+                      width: getProportionateScreenWidth(28),
                       decoration: BoxDecoration(
                         color: product.isFavorite
                             ? kPrimaryColor.withOpacity(0.15)

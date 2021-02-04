@@ -7,7 +7,7 @@ import '../../../components/rounded_icon_btn.dart';
 class CustomAppBar extends PreferredSize {
   final double rating;
 
-  CustomAppBar(this.rating);
+  CustomAppBar({@required this.rating});
 
   @override
   // AppBar().preferredSize.height provide the height that apply on AppBar
@@ -27,7 +27,7 @@ class CustomAppBar extends PreferredSize {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             RoundedIconBtn(
-              iconData: Icons.arrow_back_ios_rounded,
+              icon: Icons.arrow_back_ios_rounded,
               onPress: () => Navigator.pop(context),
             ),
             Container(

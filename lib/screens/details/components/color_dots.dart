@@ -41,13 +41,19 @@ class _ColorDotsState extends State<ColorDots> {
           ),
           Spacer(),
           RoundedIconBtn(
-            iconData: Icons.remove_rounded,
-            onPress: () {},
+            icon: Icons.remove_rounded,
+            showShadow: true,
+            onPress: () {
+              //TODO remove
+            },
           ),
-          SizedBox(width: getProportionateScreenWidth(15)),
+          SizedBox(width: getProportionateScreenWidth(20)),
           RoundedIconBtn(
-            iconData: Icons.add_rounded,
-            onPress: () {},
+            icon: Icons.add_rounded,
+            showShadow: true,
+            onPress: () {
+              //TODO add
+            },
           ),
         ],
       ),

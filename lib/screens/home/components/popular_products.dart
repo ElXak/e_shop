@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import '../../../size_config.dart';
 import '../../../models/Product.dart';
 import '../../../components/product_card.dart';
-import '../../details/details_screen.dart';
 import 'section_title.dart';
 
 class PopularProducts extends StatelessWidget {
@@ -33,14 +32,6 @@ class PopularProducts extends StatelessWidget {
                   if (demoProducts[index].isPopular)
                     return ProductCard(
                       product: demoProducts[index],
-                      onPress: () => Navigator.pushNamed(
-                        context,
-                        DetailsScreen.routeName,
-                        // Pass product to details screen
-                        arguments: ProductDetailsArguments(
-                          product: demoProducts[index],
-                        ),
-                      ),
                     );
 
                   return SizedBox.shrink(); // by default width and height are 0

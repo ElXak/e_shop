@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'screens/splash/splash_screen.dart';
-import 'routs.dart';
+import 'routes.dart';
 import 'theme.dart';
 
 void main() => runApp(MyApp());

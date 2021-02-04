@@ -26,9 +26,9 @@ final kOtpInputDecoration = InputDecoration(
   contentPadding: EdgeInsets.symmetric(
     vertical: getProportionateScreenWidth(15),
   ),
+  border: kOutlineInputBorder,
   enabledBorder: kOutlineInputBorder,
   focusedBorder: kOutlineInputBorder,
-  border: kOutlineInputBorder,
 );
 
 final kOutlineInputBorder = OutlineInputBorder(
@@ -39,11 +39,11 @@ final kOutlineInputBorder = OutlineInputBorder(
 // Form Error
 final RegExp emailValidatorRegExp =
     RegExp(r"^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
-final String kEmailNullError = "Please enter your email";
-final String kInvalidEmailError = "Please enter valid email";
-final String kPassNullError = "Please enter your password";
-final String kShortPassError = "Password is too short";
-final String kMatchPassError = "Passwords don't match";
-final String kNameNullError = "Please enter your name";
-final String kPhoneNumberNullError = "Please enter your phone number";
-final String kAddressNullError = "Please enter your address";
+const String kEmailNullError = "Please enter your email";
+const String kInvalidEmailError = "Please enter valid email";
+const String kPassNullError = "Please enter your password";
+const String kShortPassError = "Password is too short";
+const String kMatchPassError = "Passwords don't match";
+const String kNameNullError = "Please enter your name";
+const String kPhoneNumberNullError = "Please enter your phone number";
+const String kAddressNullError = "Please enter your address";

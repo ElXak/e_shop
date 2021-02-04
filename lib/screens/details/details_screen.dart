@@ -9,12 +9,12 @@ class DetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ProductDetailsArguments arguments =
+    final ProductDetailsArguments args =
         ModalRoute.of(context).settings.arguments;
     return Scaffold(
       // By default background color is white
       backgroundColor: Color(0xFFF5F6F9),
-      appBar: CustomAppBar(arguments.product.rating),
+      appBar: CustomAppBar(rating: args.product.rating),
 /*
           AppBar(
         backgroundColor: Colors.transparent,
@@ -30,7 +30,7 @@ class DetailsScreen extends StatelessWidget {
       ),
 */
       body: Body(
-        product: arguments.product,
+        product: args.product,
       ),
     );
   }
