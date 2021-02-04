@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../size_config.dart';
-import '../../../components/rounded_icon_btn.dart';
 
 class CustomAppBar extends PreferredSize {
   final double rating;
@@ -26,9 +25,21 @@ class CustomAppBar extends PreferredSize {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            RoundedIconBtn(
-              icon: Icons.arrow_back_ios_rounded,
-              onPress: () => Navigator.pop(context),
+            SizedBox(
+              height: getProportionateScreenWidth(40),
+              width: getProportionateScreenWidth(40),
+              child: FlatButton(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(60),
+                ),
+                color: Colors.white,
+                padding: EdgeInsets.zero,
+                onPressed: () => Navigator.pop(context),
+                child: SvgPicture.asset(
+                  "assets/icons/Back ICon.svg",
+                  height: 15,
+                ),
+              ),
             ),
             Container(
               padding: EdgeInsets.symmetric(
@@ -42,8 +53,11 @@ class CustomAppBar extends PreferredSize {
               child: Row(
                 children: [
                   Text(
-                    rating.toString(),
-                    style: TextStyle(fontWeight: FontWeight.w600),
+                    '$rating',
+                    style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600,
+                    ),
                   ),
                   SizedBox(width: 5),
                   SvgPicture.asset('assets/icons/Star Icon.svg'),

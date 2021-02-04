@@ -6,10 +6,6 @@ import '../../../components/product_card.dart';
 import 'section_title.dart';
 
 class PopularProducts extends StatelessWidget {
-  const PopularProducts({
-    Key key,
-  }) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -19,9 +15,7 @@ class PopularProducts extends StatelessWidget {
           //TODO popular products routeName instead null
           onPress: () => Navigator.pushNamed(context, null),
         ),
-        SizedBox(
-          height: getProportionateScreenWidth(20),
-        ),
+        SizedBox(height: getProportionateScreenWidth(20)),
         SingleChildScrollView(
           scrollDirection: Axis.horizontal,
           child: Row(
@@ -30,14 +24,12 @@ class PopularProducts extends StatelessWidget {
                 demoProducts.length,
                 (index) {
                   if (demoProducts[index].isPopular)
-                    return ProductCard(
-                      product: demoProducts[index],
-                    );
+                    return ProductCard(product: demoProducts[index]);
 
                   return SizedBox.shrink(); // by default width and height are 0
                 },
               ),
-              SizedBox(width: getProportionateScreenWidth(20))
+              SizedBox(width: getProportionateScreenWidth(20)),
             ],
           ),
         ),

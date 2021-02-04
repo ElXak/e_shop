@@ -27,7 +27,10 @@ class _ProductImagesState extends State<ProductImages> {
           width: getProportionateScreenWidth(238),
           child: AspectRatio(
             aspectRatio: 1,
-            child: Image.asset(widget.product.images[selectedImage]),
+            child: Hero(
+              tag: widget.product.id.toString(),
+              child: Image.asset(widget.product.images[selectedImage]),
+            ),
           ),
         ),
         Row(
@@ -48,17 +51,17 @@ class _ProductImagesState extends State<ProductImages> {
           selectedImage = index;
         });
       },
-      child: Container(
-        margin: EdgeInsets.only(right: getProportionateScreenWidth(15)),
-        padding: EdgeInsets.all(getProportionateScreenWidth(8)),
+      child: AnimatedContainer(
+        duration: kDefaultDuration,
+        margin: EdgeInsets.only(right: 15),
+        padding: EdgeInsets.all(8),
         height: getProportionateScreenWidth(48),
         width: getProportionateScreenWidth(48),
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(10),
           border: Border.all(
-              color:
-                  selectedImage == index ? kPrimaryColor : Colors.transparent),
+              color: kPrimaryColor.withOpacity(selectedImage == index ? 1 : 0)),
         ),
         child: Image.asset(widget.product.images[index]),
       ),

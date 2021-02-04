@@ -28,7 +28,6 @@ class ProductDescription extends StatelessWidget {
             style: Theme.of(context).textTheme.headline6,
           ),
         ),
-        SizedBox(height: 5),
         Align(
           alignment: Alignment.centerRight,
           child: GestureDetector(
@@ -50,6 +49,7 @@ class ProductDescription extends StatelessWidget {
                 'assets/icons/Heart Icon_2.svg',
                 color:
                     product.isFavorite ? Color(0xFFFF4848) : Color(0xFFDBDEE4),
+                height: getProportionateScreenWidth(16),
               ),
             ),
           ),
