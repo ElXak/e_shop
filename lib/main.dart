@@ -1,3 +1,4 @@
+import 'package:e_shop/models/CartItem.dart';
 import 'package:flutter/material.dart';
 
 import 'screens/splash/splash_screen.dart';
@@ -12,6 +13,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+      builder: (context, child) => Cart(child: child),
       title: 'Lamode.TJ',
       theme: theme(),
       // home: SplashScreen(),
