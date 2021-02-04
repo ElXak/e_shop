@@ -77,7 +77,8 @@ class ColorDot extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: onPress,
-      child: Container(
+      child: AnimatedContainer(
+        duration: kDefaultDuration,
         margin: EdgeInsets.only(right: 2),
         padding: EdgeInsets.all(8),
         height: getProportionateScreenWidth(40),

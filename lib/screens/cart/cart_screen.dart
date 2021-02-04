@@ -3,18 +3,23 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../constants.dart';
 import '../../size_config.dart';
-import '../../models/Cart.dart';
+import '../../models/CartItem.dart';
 import '../../components/default_button.dart';
-import 'components/body.dart';
+import 'components/cart_item_card.dart';
 
-class CartScreen extends StatelessWidget {
+class CartScreen extends StatefulWidget {
   static String routeName = '/cart';
 
+  @override
+  _CartScreenState createState() => _CartScreenState();
+}
+
+class _CartScreenState extends State<CartScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: buildAppBar(context),
-      body: Body(),
+      body: buildBody(),
       bottomNavigationBar: CheckOutCard(),
     );
   }
@@ -37,12 +42,58 @@ class CartScreen extends StatelessWidget {
       ),
     );
   }
+
+  Padding buildBody() {
+    return Padding(
+      padding:
+          EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
+      child: ListView.builder(
+        itemCount: demoCart.length,
+        itemBuilder: (context, index) => Padding(
+          padding: EdgeInsets.symmetric(vertical: 10),
+          child: Dismissible(
+            key: Key(demoCart[index].product.id.toString()),
+            direction: DismissDirection.endToStart,
+            background: Container(
+              padding: EdgeInsets.symmetric(horizontal: 20),
+              decoration: BoxDecoration(
+                color: Color(0xFFFFE6E6),
+                borderRadius: BorderRadius.circular(15),
+              ),
+              child: Row(
+                children: [
+                  Spacer(),
+                  SvgPicture.asset('assets/icons/Trash.svg'),
+                ],
+              ),
+            ),
+            onDismissed: (direction) {
+              setState(() {
+                demoCart.removeAt(index);
+              });
+            },
+            child: CartItemCard(cartItem: demoCart[index]),
+          ),
+        ),
+      ),
+    );
+  }
 }
 
 class CheckOutCard extends StatelessWidget {
   const CheckOutCard({
     Key key,
   }) : super(key: key);
+
+  double calculateTotal(List<CartItem> cart) {
+    double total = 0.0;
+
+    for (CartItem cartItem in cart) {
+      total += cartItem.product.price * cartItem.numOfItems;
+    }
+
+    return total;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -101,7 +152,8 @@ class CheckOutCard extends StatelessWidget {
                     text: 'Total:\n',
                     children: [
                       TextSpan(
-                        text: '\$337.15',
+                        text:
+                            '\$${calculateTotal(demoCart).toStringAsFixed(2)}',
                         style: TextStyle(fontSize: 16, color: Colors.black),
                       ),
                     ],
