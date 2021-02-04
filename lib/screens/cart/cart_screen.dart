@@ -25,8 +25,6 @@ class _CartScreenState extends State<CartScreen> {
   }
 
   AppBar buildAppBar(BuildContext context) {
-    var cartItems = Cart.of(context).cartItems;
-
     return AppBar(
       title: Row(
         children: [
@@ -38,7 +36,7 @@ class _CartScreenState extends State<CartScreen> {
           ),
           SizedBox(width: 10),
           Text(
-            '${cartItems.length} items',
+            '${demoCart.length} items',
             style: Theme.of(context).textTheme.caption,
           ),
         ],
@@ -47,17 +45,15 @@ class _CartScreenState extends State<CartScreen> {
   }
 
   Padding buildBody() {
-    var cartItems = Cart.of(context).cartItems;
-
     return Padding(
       padding:
           EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
       child: ListView.builder(
-        itemCount: cartItems.length,
+        itemCount: demoCart.length,
         itemBuilder: (context, index) => Padding(
           padding: EdgeInsets.symmetric(vertical: 10),
           child: Dismissible(
-            key: Key(cartItems[index].product.id.toString()),
+            key: Key(demoCart[index].product.id.toString()),
             direction: DismissDirection.endToStart,
             background: Container(
               padding: EdgeInsets.symmetric(horizontal: 20),
@@ -74,11 +70,10 @@ class _CartScreenState extends State<CartScreen> {
             ),
             onDismissed: (direction) {
               setState(() {
-                cartItems.removeAt(index);
-                // Cart.of(context).removeItem(index);
+                demoCart.removeAt(index);
               });
             },
-            child: CartItemCard(cartItem: cartItems[index]),
+            child: CartItemCard(cartItem: demoCart[index]),
           ),
         ),
       ),
@@ -103,8 +98,6 @@ class CheckOutCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var cartItems = Cart.of(context).cartItems;
-
     return Container(
       padding: EdgeInsets.symmetric(
         vertical: getProportionateScreenWidth(15),
@@ -161,7 +154,7 @@ class CheckOutCard extends StatelessWidget {
                     children: [
                       TextSpan(
                         text:
-                            '\$${calculateTotal(cartItems).toStringAsFixed(2)}',
+                            '\$${calculateTotal(demoCart).toStringAsFixed(2)}',
                         style: TextStyle(fontSize: 16, color: Colors.black),
                       ),
                     ],
