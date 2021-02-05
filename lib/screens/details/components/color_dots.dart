@@ -84,7 +84,7 @@ class ColorDot extends StatelessWidget {
         height: getProportionateScreenWidth(40),
         width: getProportionateScreenWidth(40),
         decoration: BoxDecoration(
-          // color: product.colors[0],
+          color: Colors.transparent,
           shape: BoxShape.circle,
           border: Border.all(
               color: isSelected ? kPrimaryColor : Colors.transparent),

@@ -29,9 +29,7 @@ class DetailsScreen extends StatelessWidget {
         ),
       ),
 */
-      body: Body(
-        product: args.product,
-      ),
+      body: Body(product: args.product),
     );
   }
 }

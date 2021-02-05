@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../size_config.dart';
-import '../../../components/home_header.dart';
+import 'home_header.dart';
 import 'categories.dart';
 import 'discount_banner.dart';
 import 'popular_products.dart';

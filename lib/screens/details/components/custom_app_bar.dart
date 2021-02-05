@@ -59,7 +59,7 @@ class CustomAppBar extends PreferredSize {
                       fontWeight: FontWeight.w600,
                     ),
                   ),
-                  SizedBox(width: 5),
+                  const SizedBox(width: 5),
                   SvgPicture.asset('assets/icons/Star Icon.svg'),
                 ],
               ),
