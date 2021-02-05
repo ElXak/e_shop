@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../constants.dart';
 import '../../../size_config.dart';
 import '../../../models/Product.dart';
+import 'image_view.dart';
 
 class ProductImages extends StatefulWidget {
   const ProductImages({
@@ -19,25 +20,40 @@ class ProductImages extends StatefulWidget {
 class _ProductImagesState extends State<ProductImages> {
   int selectedImage = 0;
 
+  final PageController pageController = PageController(
+    initialPage: 1,
+  );
+
   @override
   Widget build(BuildContext context) {
+    final PageView pageView = PageView.builder(
+      controller: pageController,
+      onPageChanged: (value) {
+        setState(() {
+          selectedImage = value;
+        });
+      },
+      itemCount: widget.product.images.length,
+      itemBuilder: (context, index) => ImageView(
+        productId: widget.product.id,
+        image: widget.product.images[index],
+      ),
+    );
+
     return Column(
       children: [
-        SizedBox(
-          width: getProportionateScreenWidth(238),
-          child: AspectRatio(
-            aspectRatio: 1,
-            child: Hero(
-              tag: widget.product.id.toString(),
-              child: Image.asset(widget.product.images[selectedImage]),
-            ),
-          ),
+        Expanded(
+          flex: 7,
+          child: pageView,
         ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: List.generate(
-            widget.product.images.length,
-            (index) => buildSmallPreview(index),
+        Expanded(
+          flex: 2,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: List.generate(
+              widget.product.images.length,
+              (index) => buildSmallPreview(index),
+            ),
           ),
         ),
       ],
@@ -49,6 +65,7 @@ class _ProductImagesState extends State<ProductImages> {
       onTap: () {
         setState(() {
           selectedImage = index;
+          pageController.jumpToPage(index);
         });
       },
       child: AnimatedContainer(
