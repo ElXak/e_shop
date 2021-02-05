@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'screens/splash/splash_screen.dart';
+import 'screens/profile/profile_screen.dart';
 import 'routes.dart';
 import 'theme.dart';
 
@@ -15,7 +16,7 @@ class MyApp extends StatelessWidget {
       title: 'Lamode.TJ',
       theme: theme(),
       // home: SplashScreen(),
-      initialRoute: SplashScreen.routeName,
+      initialRoute: ProfileScreen.routeName,
       routes: routes,
     );
   }

@@ -64,7 +64,7 @@ class CheckOutCard extends StatelessWidget {
                 // Use const when with is fixed
                 const SizedBox(width: 10),
                 Icon(
-                  Icons.arrow_forward_ios,
+                  Icons.arrow_forward_ios_rounded,
                   size: 12,
                   color: kTextColor,
                 ),
