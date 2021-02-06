@@ -21,7 +21,7 @@ class _ProductImagesState extends State<ProductImages> {
   int selectedImage = 0;
 
   final PageController pageController = PageController(
-    initialPage: 1,
+    initialPage: 0,
   );
 
   @override
