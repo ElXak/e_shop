@@ -15,3 +15,10 @@ enum FormName {
   completeProfile,
   otp,
 }
+
+enum MenuState {
+  home,
+  favorites,
+  messages,
+  profile,
+}

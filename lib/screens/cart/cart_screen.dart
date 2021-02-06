@@ -26,6 +26,7 @@ class _CartScreenState extends State<CartScreen> {
   AppBar buildAppBar(BuildContext context) {
     return AppBar(
       title: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
             'My Cart',

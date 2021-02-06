@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
+import '../../enums.dart';
 import 'components/body.dart';
+import '../../components/custom_bottom_nav_bar.dart';
 
 class ProfileScreen extends StatelessWidget {
   static String routeName = '/profile';
@@ -12,6 +14,7 @@ class ProfileScreen extends StatelessWidget {
         title: Text('Profile'),
       ),
       body: Body(),
+      bottomNavigationBar: CustomBottomNavBar(selectedMenu: MenuState.profile),
     );
   }
 }
