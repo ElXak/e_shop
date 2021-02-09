@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'profile_menu.dart';
 import 'profile_pic.dart';
+import '../../settings/settings_screen.dart';
 
 class Body extends StatelessWidget {
   @override
@@ -27,9 +28,7 @@ class Body extends StatelessWidget {
         ProfileMenu(
           icon: 'assets/icons/Settings.svg',
           text: 'Settings',
-          onPress: () {
-            //TODO Go to Settings
-          },
+          onPress: () => Navigator.pushNamed(context, SettingsScreen.routeName),
         ),
         ProfileMenu(
           icon: 'assets/icons/Question mark.svg',

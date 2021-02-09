@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../enums.dart';
-import '../size_config.dart';
+import '../utils/size_config.dart';
 import 'custom_suffix_icon.dart';
 
 class CustomTextField extends StatelessWidget {

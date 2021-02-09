@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 import '../../../constants.dart';
-import '../../../size_config.dart';
-import '../../../models/Product.dart';
+import '../../../utils/size_config.dart';
+import '../../../data/classes/Product.dart';
 import '../../../components/rounded_icon_btn.dart';
 
 class ColorDots extends StatefulWidget {

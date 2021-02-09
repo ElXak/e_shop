@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../constants.dart';
-import '../../../size_config.dart';
+import '../../../utils/size_config.dart';
 import 'categories_data.dart';
 
 class Categories extends StatelessWidget {

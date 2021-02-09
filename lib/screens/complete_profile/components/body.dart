@@ -20,6 +20,7 @@ class Body extends StatelessWidget {
           TextFieldType.lastName,
           TextFieldType.phoneNumber,
           TextFieldType.address,
+          // TextFieldType.address2,
         ],
         beforeSubmit: 40,
         afterSubmit: 30,

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../size_config.dart';
+import '../../../utils/size_config.dart';
 import '../../../components/default_button.dart';
 import '../../home/home_screen.dart';
 

@@ -6,6 +6,7 @@ enum TextFieldType {
   lastName,
   phoneNumber,
   address,
+  address2,
 }
 
 enum FormName {

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'size_config.dart';
+import 'utils/size_config.dart';
 
 const kPrimaryColor = Color(0xFFFF7643);
 const kPrimaryLightColor = Color(0xFFFFECDF);
@@ -47,3 +47,6 @@ const String kMatchPassError = "Passwords don't match";
 const String kNameNullError = "Please enter your name";
 const String kPhoneNumberNullError = "Please enter your phone number";
 const String kAddressNullError = "Please enter your address";
+
+//TODO: Change the apiURL
+const String apiURL = "https://reqres.in/api/users/2";

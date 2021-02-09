@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../components/scrolling_body.dart';
 import '../../../components/form_builder.dart';
 import '../../../enums.dart';
-import '../../login_success/login_success_screen.dart';
+import '../../home/home_screen.dart';
 
 class Body extends StatelessWidget {
   @override
@@ -22,7 +22,7 @@ class Body extends StatelessWidget {
         ],
         beforeSubmit: 30,
         afterSubmit: 0.08,
-        routeName: LoginSuccessScreen.routeName,
+        routeName: HomeScreen.routeName,
       ),
     );
   }

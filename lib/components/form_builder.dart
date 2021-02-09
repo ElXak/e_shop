@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../constants.dart';
 import '../enums.dart';
-import '../size_config.dart';
+import '../utils/size_config.dart';
 import 'form_error.dart';
 import 'default_button.dart';
 import 'custom_text_field.dart';
@@ -206,6 +206,13 @@ class _FormBuilderState extends State<FormBuilder> {
           }
         },
         onSave: (newValue) => _formData['address'] = newValue,
+      ),
+      TextFieldType.address2: TextFieldProperties(
+        type: TextFieldType.address2,
+        label: 'Address 2',
+        hint: 'Enter your address 2',
+        icon: 'assets/icons/Location point.svg',
+        onSave: (newValue) => _formData['address2'] = newValue,
       ),
     };
   }
