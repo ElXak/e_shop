@@ -29,7 +29,7 @@ class CheckOutCard extends StatelessWidget {
         horizontal: getProportionateScreenWidth(30),
       ),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).scaffoldBackgroundColor,
         borderRadius: BorderRadius.only(
           topLeft: Radius.circular(30),
           topRight: Radius.circular(30),
@@ -54,7 +54,7 @@ class CheckOutCard extends StatelessWidget {
                   height: getProportionateScreenWidth(40),
                   width: getProportionateScreenWidth(40),
                   decoration: BoxDecoration(
-                    color: Color(0xFFF5F6F9),
+                    color: Theme.of(context).buttonColor,
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: SvgPicture.asset('assets/icons/receipt.svg'),
@@ -81,7 +81,9 @@ class CheckOutCard extends StatelessWidget {
                       TextSpan(
                         text:
                             '\$${calculateTotal(demoCart).toStringAsFixed(2)}',
-                        style: TextStyle(fontSize: 16, color: Colors.black),
+                        style: TextStyle(
+                            fontSize: 16,
+                            color: Theme.of(context).textTheme.headline5.color),
                       ),
                     ],
                   ),

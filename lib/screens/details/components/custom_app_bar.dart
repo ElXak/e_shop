@@ -32,7 +32,8 @@ class CustomAppBar extends PreferredSize {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(60),
                 ),
-                color: Colors.white,
+                // color: Colors.white,
+                color: Theme.of(context).scaffoldBackgroundColor,
                 padding: EdgeInsets.zero,
                 onPressed: () => Navigator.pop(context),
                 child: SvgPicture.asset(
@@ -47,7 +48,7 @@ class CustomAppBar extends PreferredSize {
                 vertical: 5,
               ),
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: Theme.of(context).scaffoldBackgroundColor,
                 borderRadius: BorderRadius.circular(14),
               ),
               child: Row(

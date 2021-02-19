@@ -24,7 +24,7 @@ class SocialCard extends StatelessWidget {
         height: getProportionateScreenHeight(40),
         width: getProportionateScreenWidth(40),
         decoration: BoxDecoration(
-          color: Color(0xFFF5F6F9),
+          color: Theme.of(context).buttonColor,
           shape: BoxShape.circle,
         ),
         child: SvgPicture.asset(icon),

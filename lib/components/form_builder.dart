@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../constants.dart';
 import '../enums.dart';
@@ -13,6 +15,7 @@ import 'form_title.dart';
 import 'form_text.dart';
 import '../screens/forgot_password/forgot_password_screen.dart';
 import 'text_field_properties.dart';
+import '../data/models/auth.dart';
 
 class FormBuilder extends StatefulWidget {
   FormBuilder({
@@ -23,23 +26,32 @@ class FormBuilder extends StatefulWidget {
     this.afterHeader,
     this.beforeSubmit,
     this.afterSubmit,
-    this.routeName,
     this.textFields,
+    this.userName,
+    this.routeName,
+    // this.onPress,
   });
 
   final double beforeHeader, afterHeader, beforeSubmit, afterSubmit;
   final FormName formName;
-  final String title, text, routeName;
+  final String title, text;
+  final String userName, routeName;
   final List<TextFieldType> textFields;
+  // final Function onPress;
 
   @override
   _FormBuilderState createState() => _FormBuilderState();
 }
 
 class _FormBuilderState extends State<FormBuilder> {
+  String _status = 'no-action';
+
   final _formKey = GlobalKey<FormState>();
+
   Map<String, dynamic> _formData = {'remember': false};
   List<String> otp = ['0', '0', '0', '0'];
+
+  TextEditingController _controllerUserName;
 
   FocusNode pin2FocusNode;
   FocusNode pin3FocusNode;
@@ -53,6 +65,10 @@ class _FormBuilderState extends State<FormBuilder> {
 
   @override
   void initState() {
+    if (widget.formName == FormName.signIn) {
+      _controllerUserName = TextEditingController(text: widget?.userName ?? '');
+      _loadUserName();
+    }
     super.initState();
     pin2FocusNode = FocusNode();
     pin3FocusNode = FocusNode();
@@ -68,6 +84,7 @@ class _FormBuilderState extends State<FormBuilder> {
         label: 'Email',
         hint: 'Enter your email',
         icon: 'assets/icons/Mail.svg',
+        controller: _controllerUserName,
         validator: (value) {
           if (value.isEmpty) {
             addError(error: kEmailNullError);
@@ -207,14 +224,15 @@ class _FormBuilderState extends State<FormBuilder> {
         },
         onSave: (newValue) => _formData['address'] = newValue,
       ),
-      TextFieldType.address2: TextFieldProperties(
-        type: TextFieldType.address2,
+      TextFieldType.mailbox: TextFieldProperties(
+        type: TextFieldType.mailbox,
         label: 'Address 2',
         hint: 'Enter your address 2',
         icon: 'assets/icons/Location point.svg',
         onSave: (newValue) => _formData['address2'] = newValue,
       ),
     };
+    print(_status);
   }
 
   @override
@@ -224,6 +242,20 @@ class _FormBuilderState extends State<FormBuilder> {
     pin4FocusNode.dispose();
     focusNodes.clear();
     super.dispose();
+  }
+
+  void _loadUserName() async {
+    try {
+      SharedPreferences _prefs = await SharedPreferences.getInstance();
+      var _userName = _prefs.getString('saved_username') ?? '';
+      var _rememberMe = _prefs.getBool('remember_me') ?? false;
+
+      if (_rememberMe) {
+        _controllerUserName.text = _userName ?? '';
+      }
+    } catch (e) {
+      print(e);
+    }
   }
 
   OTPTextField buildOPTTextField({int index}) {
@@ -268,6 +300,7 @@ class _FormBuilderState extends State<FormBuilder> {
       label: _textFieldParams[textFieldType].label,
       hint: _textFieldParams[textFieldType].hint,
       icon: _textFieldParams[textFieldType].icon,
+      controller: _textFieldParams[textFieldType].controller,
       validator: _textFieldParams[textFieldType].validator,
       onChange: _textFieldParams[textFieldType].onChange,
       onSave: _textFieldParams[textFieldType].onSave,
@@ -296,6 +329,8 @@ class _FormBuilderState extends State<FormBuilder> {
 
   @override
   Widget build(BuildContext context) {
+    final _auth = Provider.of<AuthModel>(context, listen: true);
+
     widgets = [
       SizedBox(height: SizeConfig.screenHeight * widget.beforeHeader),
       FormTitle(widget.title),
@@ -327,11 +362,13 @@ class _FormBuilderState extends State<FormBuilder> {
         Row(
           children: [
             Checkbox(
-              value: _formData['remember'],
+              // value: _formData['remember'],
+              value: _auth.rememberMe,
               activeColor: kPrimaryColor,
               onChanged: (value) {
                 setState(() {
-                  _formData['remember'] = value;
+                  // _formData['remember'] = value;
+                  _auth.handleRememberMe(value);
                 });
               },
             ),
@@ -377,13 +414,51 @@ class _FormBuilderState extends State<FormBuilder> {
         child: DefaultButton(
           text: 'Continue',
           onPress: () {
-            if (_formKey.currentState.validate()) {
-              _formKey.currentState.save();
-              //TODO Validate the _formData by DB or json
-              print(_formData);
-              print(otp);
-              Navigator.pushNamed(context, widget.routeName);
+            setState(() {
+              //TODO: Progress Spinner = true
+              this._status = 'loading';
+            });
+
+            final form = _formKey.currentState;
+            if (form.validate()) {
+              form.save();
+
+/*
+              final snackBar = SnackBar(
+                duration: Duration(seconds: 30),
+                content: Row(
+                  children: [
+                    CircularProgressIndicator(),
+                    Text('  Logging In...'),
+                  ],
+                ),
+              );
+*/
+
+              if (widget.formName == FormName.signIn) {
+                _auth
+                    .login(
+                  userLogin: _formData['email'].toString().toLowerCase().trim(),
+                  userPassword: _formData['password'].toString().trim(),
+                )
+                    .then((result) {
+                  if (result['result'] == 'AUTH_OK') {
+                    Navigator.pushNamed(context, widget.routeName);
+                  } else {
+                    setState(() => this._status = 'rejected');
+                  }
+                });
+                //TODO Validate the _formData by DB or json
+              } else {
+                print(_formData);
+                print(otp);
+                Navigator.pushNamed(context, widget.routeName);
+              }
             }
+
+            setState(() {
+              //TODO: Progress Spinner = false
+            });
           },
         ),
       ),

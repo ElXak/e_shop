@@ -1,16 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import 'profile_menu.dart';
 import 'profile_pic.dart';
 import '../../settings/settings_screen.dart';
+import '../../splash/splash_screen.dart';
+import '../../../data/models/auth.dart';
 
 class Body extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final _auth = Provider.of<AuthModel>(context, listen: true);
+
     return Column(
       children: [
         ProfilePic(),
-        SizedBox(height: 20),
         ProfileMenu(
           icon: 'assets/icons/User Icon.svg',
           text: 'My Account',
@@ -41,7 +45,8 @@ class Body extends StatelessWidget {
           icon: 'assets/icons/Log out.svg',
           text: 'Log Out',
           onPress: () {
-            //TODO Log out
+            _auth.logout();
+            Navigator.pushNamed(context, SplashScreen.routeName);
           },
         ),
       ],

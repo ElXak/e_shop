@@ -29,7 +29,7 @@ class Body extends StatelessWidget {
           flex: 6,
           child: SingleChildScrollView(
             child: TopRoundedContainer(
-              color: Colors.white,
+              color: Theme.of(context).scaffoldBackgroundColor,
               child: Column(
                 children: [
                   ProductDescription(
@@ -39,12 +39,12 @@ class Body extends StatelessWidget {
                     },
                   ),
                   TopRoundedContainer(
-                    color: Color(0xFFF6F7F9),
+                    color: Theme.of(context).buttonColor,
                     child: Column(
                       children: [
                         ColorDots(product: product),
                         TopRoundedContainer(
-                          color: Colors.white,
+                          color: Theme.of(context).scaffoldBackgroundColor,
                           child: Padding(
                             padding: EdgeInsets.only(
                               left: SizeConfig.screenWidth * 0.15,

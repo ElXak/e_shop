@@ -13,7 +13,8 @@ class DetailsScreen extends StatelessWidget {
         ModalRoute.of(context).settings.arguments;
     return Scaffold(
       // By default background color is white
-      backgroundColor: Color(0xFFF5F6F9),
+      backgroundColor: Theme.of(context).buttonColor,
+
       appBar: CustomAppBar(rating: args.product.rating),
 /*
           AppBar(

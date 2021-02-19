@@ -14,6 +14,7 @@ class CustomTextField extends StatelessWidget {
     this.validator,
     this.onChange,
     this.onSave,
+    this.controller,
   }) : super(key: key);
 
   final TextFieldType type;
@@ -23,6 +24,7 @@ class CustomTextField extends StatelessWidget {
   final Function validator;
   final Function onChange;
   final Function onSave;
+  final TextEditingController controller;
 
   @override
   Widget build(BuildContext context) {
@@ -33,6 +35,9 @@ class CustomTextField extends StatelessWidget {
         inputType = TextInputType.emailAddress;
         break;
       case TextFieldType.phoneNumber:
+      case TextFieldType.captcha:
+      case TextFieldType.mailbox:
+      case TextFieldType.zipCode:
         inputType = TextInputType.number;
         break;
       default:
@@ -44,6 +49,7 @@ class CustomTextField extends StatelessWidget {
       child: TextFormField(
         obscureText: type == TextFieldType.password ? true : false,
         keyboardType: inputType,
+        controller: controller,
         validator: validator,
         onChanged: onChange,
         onSaved: onSave,

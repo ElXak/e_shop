@@ -1,12 +1,15 @@
 enum TextFieldType {
+  login,
   email,
   password,
   confirmPassword,
+  captcha,
   firstName,
   lastName,
   phoneNumber,
   address,
-  address2,
+  mailbox,
+  zipCode,
 }
 
 enum FormName {

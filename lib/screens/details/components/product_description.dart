@@ -38,8 +38,9 @@ class ProductDescription extends StatelessWidget {
               padding: EdgeInsets.all(getProportionateScreenWidth(15)),
               width: getProportionateScreenWidth(64),
               decoration: BoxDecoration(
-                color:
-                    product.isFavorite ? Color(0xFFFFE6E6) : Color(0xFFF5F6F9),
+                color: product.isFavorite
+                    ? Color(0xFFFFE6E6)
+                    : Theme.of(context).buttonColor,
                 borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(20),
                   bottomLeft: Radius.circular(20),

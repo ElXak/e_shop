@@ -23,9 +23,11 @@ class SectionTitle extends StatelessWidget {
             onTap: onPress,
             child: Text(
               title,
+              // style: Theme.of(context).textTheme.headline5,
               style: TextStyle(
-                fontSize: getProportionateScreenWidth(18),
-                color: Colors.black,
+                fontSize: 18,
+                // color: Colors.black,
+                color: Theme.of(context).textTheme.headline5.color,
               ),
             ),
           ),

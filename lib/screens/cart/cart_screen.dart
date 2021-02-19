@@ -31,7 +31,7 @@ class _CartScreenState extends State<CartScreen> {
           Text(
             'My Cart',
             style: TextStyle(
-              color: Colors.black,
+              color: Theme.of(context).textTheme.headline5.color,
             ),
           ),
           SizedBox(width: 10),

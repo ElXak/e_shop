@@ -26,13 +26,14 @@ class RoundedIconBtn extends StatelessWidget {
             BoxShadow(
               offset: Offset(0, 6),
               blurRadius: 10,
-              color: Color(0xFFB0B0B0).withOpacity(0.2),
+              color: Theme.of(context).shadowColor,
             ),
         ],
       ),
       child: FlatButton(
         padding: EdgeInsets.zero,
-        color: Colors.white,
+        // color: Colors.white,
+        color: Theme.of(context).scaffoldBackgroundColor,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(50),
         ),

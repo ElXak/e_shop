@@ -4,11 +4,10 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:http/http.dart' as http;
-import 'package:uuid/uuid.dart';
 
 import '../classes/User.dart';
 import '../../constants.dart';
+import '../../utils/networking.dart';
 
 class AuthModel extends ChangeNotifier {
   String errorMessage = '';
@@ -103,9 +102,11 @@ class AuthModel extends ChangeNotifier {
 
   User get user => _user;
 
+/*
   Future<User> getInfo(String token) async {
     try {
-      var _data = await http.get(apiURL);
+      //TODO: put relevant url
+      var _data = await http.get(kHostURL);
       // var _json = json.decode(json.encode(_data));
       var _newUser = User.fromJson(json.decode(_data.body)['data']);
       _newUser?.token = token;
@@ -115,39 +116,60 @@ class AuthModel extends ChangeNotifier {
       return null;
     }
   }
+*/
 
-  Future<bool> login({
-    @required String userName,
-    @required String password,
+  Future<dynamic> login({
+    @required String userLogin,
+    @required String userPassword,
   }) async {
-    var uuid = Uuid();
-    String _userName = userName;
-    String _password = password;
+    // var uuid = Uuid();
+    Map<String, String> postData = {
+      'AUTH_FORM': 'Y',
+      'USER_LOGIN': userLogin,
+      'USER_PASSWORD': userPassword,
+    };
+    NetworkHelper networkHelper = NetworkHelper(kFormApiUrl, body: postData);
+    var serverResponse = await networkHelper.postData();
 
-    //TODO: API LOGIN CODE HERE
-    await Future.delayed(Duration(seconds: 3));
-    print('Logging In => $_userName, $_password');
+    // String url =
+    //     '$kFormApiUrl?AUTH_FORM=Y&USER_LOGIN=$userLogin&USER_PASSWORD=$userPassword';
+    // NetworkHelper networkHelper = NetworkHelper(url);
+    // var serverResponse = await networkHelper.getData();
+
+    if (serverResponse == null || serverResponse['result'] == 'AUTH_ERROR')
+      return serverResponse;
+
+    // await Future.delayed(Duration(seconds: 3));
+    print('Logging In => $userLogin, $userPassword');
 
     if (_rememberMe) {
       SharedPreferences.getInstance()
-          .then((prefs) => prefs.setString('saved_username', _userName));
+          .then((prefs) => prefs.setString('saved_username', userLogin));
     }
 
     // Get Info For User
-    User _newUser = await getInfo(uuid.v4().toString());
+    // User _newUser = await getInfo(uuid.v4().toString());
+    getUser(serverResponse['user']);
+
+/*
+    if (_newUser?.token == null || _newUser.token.isEmpty)
+      return serverResponse;
+*/
+    return serverResponse;
+  }
+
+  void getUser(user) {
+    User _newUser = User.fromJson(user);
     if (_newUser != null) {
       _user = _newUser;
       notifyListeners();
 
       SharedPreferences.getInstance().then((prefs) {
         var _save = json.encode(_user.toJson());
-        print('Data: $_save');
+        print('Saving User Data: $_save');
         prefs.setString('user_data', _save);
       });
     }
-
-    if (_newUser?.token == null || _newUser.token.isEmpty) return false;
-    return true;
   }
 
   Future<void> logout() async {
@@ -156,5 +178,125 @@ class AuthModel extends ChangeNotifier {
     SharedPreferences.getInstance()
         .then((prefs) => prefs.setString('user_data', null));
     return;
+  }
+
+  bool isEmail(String value) {
+    return emailValidatorRegExp.hasMatch(value);
+  }
+
+  Future<dynamic> forgotPassword(String userLogin) async {
+    Map<String, String> postData = {
+      'form_id': 'forgot',
+      'TYPE': 'SEND_PWD_AJAX',
+      'USER_LOGIN': isEmail(userLogin)
+          ? ''
+          : userLogin, //TODO: Check if userLogin is Login or Email
+      'USER_EMAIL': isEmail(userLogin)
+          ? userLogin
+          : '', // Check if userLogin is Login or Email
+    };
+
+    NetworkHelper networkHelper = NetworkHelper(kFormApiUrl, body: postData);
+    var serverResponse = await networkHelper.postData();
+
+    if (serverResponse == null || serverResponse['result'] == 'ERROR')
+      return serverResponse;
+
+    print('Password sent to => $userLogin');
+
+    return serverResponse;
+  }
+
+  Future<dynamic> sigUp({
+    @required String userEmail,
+    @required String userPassword,
+    @required String confirmPassword,
+    String captchaSid,
+    String captcha,
+  }) async {
+    Map<String, String> postData = {
+      'form_id': 'reg',
+      'REGISTER[EMAIL]': userEmail,
+      'REGISTER[PASSWORD]': userPassword,
+      'REGISTER[CONFIRM_PASSWORD]': confirmPassword,
+      'captcha_sid': captchaSid,
+      'captcha_word': captcha,
+    };
+    NetworkHelper networkHelper = NetworkHelper(kFormApiUrl, body: postData);
+    var serverResponse = await networkHelper.postData();
+
+    if (serverResponse == null ||
+        serverResponse['result'] == 'ERROR' ||
+        serverResponse['result'] == 'EMAIL_EXISTS') return serverResponse;
+
+    if (_rememberMe) {
+      SharedPreferences.getInstance()
+          .then((prefs) => prefs.setString('saved_username', userEmail));
+    }
+
+    getUser(serverResponse['user']);
+
+    return serverResponse;
+  }
+
+  Future<dynamic> editProfile({
+    @required String userLogin,
+    @required String firstName,
+    String lastName,
+    @required String phoneNumber,
+    @required String address,
+    String mailbox,
+    String zipCode,
+  }) async {
+    var sessionData = await getSession();
+    Map<String, String> postData = {
+      'sessid': sessionData['session_id'],
+      'ID': _user.id,
+      'LOGIN': userLogin,
+      'EMAIL': _user.email,
+      'NAME': firstName,
+      'LAST_NAME': lastName,
+      'PERSONAL_PHONE': phoneNumber,
+      'PERSONAL_STREET': address,
+      'PERSONAL_MAILBOX': mailbox,
+      'PERSONAL_ZIP': zipCode,
+      'save': 'Save profile',
+    };
+
+    NetworkHelper networkHelper = NetworkHelper(kProfileUrl, body: postData);
+    var serverResponse = await networkHelper.postData();
+
+    if (serverResponse == null ||
+        serverResponse['strProfileError'] != '' ||
+        serverResponse['result'] == 'NOT_AUTHORIZED') return serverResponse;
+
+    if (_rememberMe) {
+      SharedPreferences.getInstance()
+          .then((prefs) => prefs.setString('saved_username', userLogin));
+    }
+
+    getUser(serverResponse['arUser']);
+
+    return serverResponse;
+  }
+
+  Future<dynamic> getCaptchaSid() async {
+    NetworkHelper networkHelper = NetworkHelper(kCaptchaCodeUrl);
+    var serverResponse = await networkHelper.getData();
+
+    // notifyListeners();
+
+    if (serverResponse == null) return {'result': 'ERROR'};
+    return serverResponse;
+  }
+
+  Future<dynamic> getSession() async {
+    NetworkHelper networkHelper = NetworkHelper(kSessionIdUrl);
+    var serverResponse = await networkHelper.getData();
+
+    // notifyListeners();
+
+    if (serverResponse == null) return {'result': 'ERROR'};
+    return serverResponse;
   }
 }

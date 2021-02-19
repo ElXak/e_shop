@@ -51,7 +51,8 @@ class ProductCard extends StatelessWidget {
                 height: 46,
                 child: Text(
                   product.title,
-                  style: TextStyle(color: Colors.black),
+                  style: TextStyle(
+                      color: Theme.of(context).textTheme.headline2.color),
                   maxLines: 2,
                 ),
               ),

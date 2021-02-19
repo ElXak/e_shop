@@ -11,12 +11,14 @@ const kPrimaryGradientColor = LinearGradient(
 );
 const kSecondaryColor = Color(0xFF979797);
 const kTextColor = Color(0xFF757575);
+const kSecondaryButtonColor = Color(0xFFF5F6F9);
+// const kCardColor = Color(0xFFF6F7F9);
 
 const kAnimationDuration = Duration(milliseconds: 200);
 const kDefaultDuration = Duration(milliseconds: 250);
 
 final kHeadingStyle = TextStyle(
-  fontSize: getProportionateScreenWidth(28),
+  fontSize: 28,
   fontWeight: FontWeight.bold,
   color: Colors.black,
   height: 1.5,
@@ -39,14 +41,25 @@ final kOutlineInputBorder = OutlineInputBorder(
 // Form Error
 final RegExp emailValidatorRegExp =
     RegExp(r"^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
+const String kLoginNullError = "Please enter your login";
 const String kEmailNullError = "Please enter your email";
+const String kLoginEmailPhoneNullError =
+    "Please enter your login, email or phone number";
 const String kInvalidEmailError = "Please enter valid email";
+const String kEmailExistsError =
+    "Пользователь с таким e-mail (%s) уже существует.";
 const String kPassNullError = "Please enter your password";
 const String kShortPassError = "Password is too short";
 const String kMatchPassError = "Passwords don't match";
+const String kCaptchaNullError = "Please enter captcha";
 const String kNameNullError = "Please enter your name";
 const String kPhoneNumberNullError = "Please enter your phone number";
 const String kAddressNullError = "Please enter your address";
 
-//TODO: Change the apiURL
-const String apiURL = "https://reqres.in/api/users/2";
+const String kHostURL = 'https://lamode.tj';
+const String kFormApiUrl = '$kHostURL/json/auth.php';
+const String kCaptchaCodeUrl = '$kHostURL/json/captcha.php';
+const String kCaptchaImageUrl =
+    '$kHostURL/bitrix/tools/captcha.php?captcha_sid=';
+const String kSessionIdUrl = '$kHostURL/json/session.php';
+const String kProfileUrl = '$kHostURL/json/profile.php';

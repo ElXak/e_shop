@@ -1,13 +1,14 @@
-import 'package:e_shop/screens/home/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:provider/provider.dart';
 import 'package:theme_provider/theme_provider.dart';
 
+import 'dark_them.dart';
 import 'data/models/auth.dart';
+import 'screens/home/home_screen.dart';
 import 'screens/splash/splash_screen.dart';
 import 'routes.dart';
-import 'theme.dart';
+import 'orange_theme.dart';
 
 void main() => runApp(MyApp());
 
@@ -56,9 +57,15 @@ class _MyAppState extends State<MyApp> {
         },
         themes: [
           AppTheme.light(id: 'light'),
-          AppTheme.dark(id: 'dark'),
           AppTheme(
-              id: 'orange', description: 'Rounded Orange Theme', data: theme()),
+            id: 'dark',
+            description: 'Dark Theme',
+            data: darkTheme(),
+          ),
+          AppTheme(
+              id: 'orange',
+              description: 'Rounded Orange Theme',
+              data: orangeTheme()),
         ],
         child: ThemeConsumer(
           child: Builder(
@@ -66,7 +73,7 @@ class _MyAppState extends State<MyApp> {
               debugShowCheckedModeBanner: false,
               title: 'Lamode.TJ',
               theme: ThemeProvider.themeOf(themeContext).data,
-              home: Consumer<AuthModel>(builder: (context, model, _) {
+              home: Consumer<AuthModel>(builder: (context, model, child) {
                 if (model?.user != null) return HomeScreen();
                 return SplashScreen();
               }),

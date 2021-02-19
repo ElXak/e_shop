@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'constants.dart';
 
-ThemeData theme() {
+ThemeData orangeTheme() {
   return ThemeData(
     primaryColor: kPrimaryColor,
     accentColor: kSecondaryColor,
@@ -12,6 +12,8 @@ ThemeData theme() {
     textTheme: textTheme(),
     inputDecorationTheme: inputDecorationTheme(),
     visualDensity: VisualDensity.adaptivePlatformDensity,
+    buttonColor: kSecondaryButtonColor,
+    shadowColor: Color(0xFFB0B0B0).withOpacity(0.2),
   );
 }
 
@@ -31,6 +33,8 @@ InputDecorationTheme inputDecorationTheme() {
 
 TextTheme textTheme() {
   return TextTheme(
+    headline4: kHeadingStyle,
+    headline5: TextStyle(color: Colors.black),
     bodyText1: TextStyle(color: kTextColor),
     bodyText2: TextStyle(color: kTextColor),
   );

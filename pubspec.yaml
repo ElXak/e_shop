@@ -36,6 +36,8 @@ dependencies:
   json_annotation: ^3.1.1 # for annotation of data for jason
   local_auth: ^0.6.3+4 # authentication sensors such as Fingerprint Reader and Touch ID
   uuid: ^2.2.2 # RFC4122 (v1, v4, v5) UUID Generator and Parser
+  modal_progress_hud: ^0.1.3 # loading progress spinner
+  sprintf: ^5.0.0 # used for localization
 
 dev_dependencies:
   flutter_test:

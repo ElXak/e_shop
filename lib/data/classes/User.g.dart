@@ -8,24 +8,36 @@ part of 'User.dart';
 
 User _$UserFromJson(Map<String, dynamic> json) {
   return User(
-    id: json['id'] as int,
-    firstName: json['firstName'] as String,
-    lastName: json['lastName'] as String,
-    avatar: json['avatar'] as String,
-    token: json['token'] as String,
-    phoneNumber: json['phoneNumber'] as String,
-    address: json['address'] as String,
-    address2: json['address2'] as String,
+    id: json['ID'] as String,
+    login: json['LOGIN'] as String,
+    email: json['EMAIL'] as String,
+    firstName: json['NAME'] as String,
+    lastName: json['LAST_NAME'] as String,
+    avatar: json['PERSONAL_PHOTO'] as String,
+    gender: json['PERSONAL_GENDER'] as String,
+    birthDate: json['PERSONAL_BIRTHDATE'] == null
+        ? null
+        : DateTime.parse(json['PERSONAL_BIRTHDATE'] as String),
+    phoneNumber: json['PERSONAL_PHONE'] as String,
+    address: json['PERSONAL_STREET'] as String,
+    mailbox: json['PERSONAL_MAILBOX'] as String,
+    city: json['PERSONAL_CITY'] as String,
+    zipCode: json['PERSONAL_ZIP'] as String,
   );
 }
 
 Map<String, dynamic> _$UserToJson(User instance) => <String, dynamic>{
-      'id': instance.id,
-      'firstName': instance.firstName,
-      'lastName': instance.lastName,
-      'avatar': instance.avatar,
-      'token': instance.token,
-      'phoneNumber': instance.phoneNumber,
-      'address': instance.address,
-      'address2': instance.address2,
+      'ID': instance.id,
+      'LOGIN': instance.login,
+      'EMAIL': instance.email,
+      'NAME': instance.firstName,
+      'LAST_NAME': instance.lastName,
+      'PERSONAL_PHOTO': instance.avatar,
+      'PERSONAL_GENDER': instance.gender,
+      'PERSONAL_BIRTHDATE': instance.birthDate?.toIso8601String(),
+      'PERSONAL_PHONE': instance.phoneNumber,
+      'PERSONAL_STREET': instance.address,
+      'PERSONAL_MAILBOX': instance.mailbox,
+      'PERSONAL_CITY': instance.city,
+      'PERSONAL_ZIP': instance.zipCode,
     };

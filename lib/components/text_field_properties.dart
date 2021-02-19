@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 import '../enums.dart';
 
 class TextFieldProperties {
@@ -6,6 +8,7 @@ class TextFieldProperties {
     this.label,
     this.hint,
     this.icon,
+    this.controller,
     this.validator,
     this.onChange,
     this.onSave,
@@ -15,6 +18,7 @@ class TextFieldProperties {
   String label;
   String hint;
   String icon;
+  TextEditingController controller;
   Function validator;
   Function onChange;
   Function onSave;

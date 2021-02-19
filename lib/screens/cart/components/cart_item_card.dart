@@ -23,7 +23,7 @@ class CartItemCard extends StatelessWidget {
             child: Container(
               padding: EdgeInsets.all(getProportionateScreenWidth(10)),
               decoration: BoxDecoration(
-                color: Color(0xFFF5F6F9),
+                color: Theme.of(context).buttonColor,
                 borderRadius: BorderRadius.circular(15),
               ),
               child: Image.asset(cartItem.product.images[0]),
@@ -38,7 +38,7 @@ class CartItemCard extends StatelessWidget {
               cartItem.product.title,
               style: TextStyle(
                 fontSize: 16,
-                color: Colors.black,
+                color: Theme.of(context).textTheme.headline5.color,
               ),
               maxLines: 2,
             ),
