@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="32" height="27" viewBox="0 0 32 27">
+    <g id="icon_navigation_menu_24px" data-name="icon/navigation/menu_24px">
+        <rect id="Boundary" width="24" height="24" fill="none"/>
+        <path id="_Color" data-name=" ↳Color" d="M9.321,12H0V11H9.321v1ZM7.4,6H0V5H7.4V6ZM8.98.034H0V-1.034H8.98V.033Z" transform="translate(2 7)"/>
+    </g>
+    <g id="icon_action_search_24px" data-name="icon/action/search_24px" transform="translate(8 3)">
+        <rect id="Boundary-2" data-name="Boundary" width="24" height="24" fill="none"/>
+        <path id="_Color-2" data-name=" ↳Color" d="M16.814,17.588h0l-5.049-5.058-.443-.477-.278-.288a6.7,6.7,0,1,1,.721-.721l.288.278.432.443,5.109,4.994-.779.829ZM6.69,1.06A5.63,5.63,0,1,0,12.32,6.69,5.636,5.636,0,0,0,6.69,1.06Z" transform="translate(3 3)"/>
+    </g>
+</svg>

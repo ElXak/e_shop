@@ -1,17 +1,17 @@
 import 'package:flutter/widgets.dart';
 
-import 'screens/forgot_password/forgot_password_screen.dart';
-import 'screens/sign_in/sign_in_screen.dart';
-import 'screens/splash/splash_screen.dart';
-import 'screens/login_success/login_success_screen.dart';
-import 'screens/sign_up/sign_up_screen.dart';
-import 'screens/complete_profile/complete_profile_screen.dart';
-import 'screens/otp/otp_screen.dart';
-import 'screens/home/home_screen.dart';
-import 'screens/details/details_screen.dart';
-import 'screens/cart/cart_screen.dart';
-import 'screens/profile/profile_screen.dart';
-import 'screens/settings/settings_screen.dart';
+import 'ui/forms/forgot_password_screen.dart';
+import 'ui/forms/sign_in_screen.dart';
+import 'ui/splash/splash_screen.dart';
+import 'ui/login_success/login_success_screen.dart';
+import 'ui/forms/sign_up_screen.dart';
+import 'ui/forms/complete_profile_screen.dart';
+import 'ui/forms/otp_screen.dart';
+import 'ui/home/home_screen.dart';
+import 'ui/details/details_screen.dart';
+import 'ui/cart/cart_screen.dart';
+import 'ui/profile/profile_screen.dart';
+import 'ui/settings/settings_screen.dart';
 
 // We use name routes
 // All our routes will be available here

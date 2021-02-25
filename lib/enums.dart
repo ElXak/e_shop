@@ -22,7 +22,9 @@ enum FormName {
 
 enum MenuState {
   home,
-  favorites,
+  categories,
+  discounts,
+  notifications,
   messages,
   profile,
 }

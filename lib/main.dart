@@ -5,8 +5,8 @@ import 'package:theme_provider/theme_provider.dart';
 
 import 'dark_them.dart';
 import 'data/models/auth.dart';
-import 'screens/home/home_screen.dart';
-import 'screens/splash/splash_screen.dart';
+import 'ui/home/home_screen.dart';
+import 'ui/splash/splash_screen.dart';
 import 'routes.dart';
 import 'orange_theme.dart';
 

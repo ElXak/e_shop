@@ -241,6 +241,7 @@ class AuthModel extends ChangeNotifier {
 
   Future<dynamic> editProfile({
     @required String userLogin,
+    @required String userEmail,
     @required String firstName,
     String lastName,
     @required String phoneNumber,
