@@ -6,6 +6,7 @@ import 'package:local_auth/local_auth.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../classes/User.dart';
+import '../classes/Gender.dart';
 import '../../constants.dart';
 import '../../utils/networking.dart';
 
@@ -80,6 +81,13 @@ class AuthModel extends ChangeNotifier {
         }
       } else {
         _user = _savedUser;
+      }
+      if (_user.gender == 'M') {
+        genders['Male'].isSelected = true;
+        genders['Female'].isSelected = false;
+      } else if (_user.gender == 'F') {
+        genders['Male'].isSelected = false;
+        genders['Female'].isSelected = true;
       }
     }
     notifyListeners();
@@ -244,6 +252,7 @@ class AuthModel extends ChangeNotifier {
     @required String userEmail,
     @required String firstName,
     String lastName,
+    String gender,
     @required String phoneNumber,
     @required String address,
     String mailbox,
@@ -257,6 +266,7 @@ class AuthModel extends ChangeNotifier {
       'EMAIL': _user.email,
       'NAME': firstName,
       'LAST_NAME': lastName,
+      'PERSONAL_GENDER': gender,
       'PERSONAL_PHONE': phoneNumber,
       'PERSONAL_STREET': address,
       'PERSONAL_MAILBOX': mailbox,

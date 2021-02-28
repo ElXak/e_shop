@@ -39,6 +39,8 @@ dependencies:
   modal_progress_hud: ^0.1.3 # loading progress spinner
   sprintf: ^5.0.0 # used for localization
   url_launcher: ^5.7.10 # for launching phone call and mailto
+  font_awesome_flutter: 8.4.0 # icons
+  date_time_picker: ^1.1.1
 
 dev_dependencies:
   flutter_test:

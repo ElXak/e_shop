@@ -14,6 +14,7 @@ ThemeData orangeTheme() {
     visualDensity: VisualDensity.adaptivePlatformDensity,
     buttonColor: kSecondaryButtonColor,
     shadowColor: Color(0xFFB0B0B0).withOpacity(0.2),
+    // buttonTheme: buttonThemeData(),
   );
 }
 
@@ -30,6 +31,17 @@ InputDecorationTheme inputDecorationTheme() {
     border: outlineInputBorder,
   );
 }
+
+/*
+ButtonThemeData buttonThemeData() {
+  return ButtonThemeData(
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(20),
+    ),
+    buttonColor: kPrimaryColor,
+  );
+}
+*/
 
 TextTheme textTheme() {
   return TextTheme(

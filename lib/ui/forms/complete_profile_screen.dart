@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:provider/provider.dart';
 import 'package:sprintf/sprintf.dart';
+import 'package:date_time_picker/date_time_picker.dart';
 
+import 'components/custom_radio.dart';
 import 'components/form_screen.dart';
 import 'components/scrolling_body.dart';
 import 'components/form_text.dart';
@@ -12,6 +14,7 @@ import 'components/custom_text_field.dart';
 import '../components/default_button.dart';
 import '../../constants.dart';
 import '../../data/models/auth.dart';
+import '../../data/classes/Gender.dart';
 import '../../enums.dart';
 import '../../utils/size_config.dart';
 import '../home/home_screen.dart';
@@ -32,8 +35,10 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
 
   // String _status = 'no-action';
   bool showSpinner = false;
+  // Gender selectedGender;
 
   final List<String> errors = [];
+
   Map<String, String> _formData = {};
 
   TextEditingController _controllerLogin,
@@ -171,6 +176,56 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                   controller: _controllerLastName,
                   onSave: (newValue) => _formData['lastName'] = newValue,
                 ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text('Gender:'),
+                    Container(
+                      // padding: EdgeInsets.all(getProportionateScreenWidth(15)),
+                      decoration: BoxDecoration(
+                        color: kPrimaryLightColor,
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          InkWell(
+                            borderRadius: BorderRadius.circular(20),
+                            onTap: () {
+                              _formData['gender'] = 'M';
+
+                              setState(() {
+                                genders['Male'].isSelected = true;
+                                genders['Female'].isSelected = false;
+                              });
+                            },
+                            child: CustomRadio(
+                              gender: genders['Male'],
+                              position: 0,
+                            ),
+                          ),
+                          InkWell(
+                            borderRadius: BorderRadius.circular(20),
+                            onTap: () {
+                              _formData['gender'] = 'F';
+
+                              setState(() {
+                                genders['Male'].isSelected = false;
+                                genders['Female'].isSelected = true;
+                              });
+                            },
+                            child: CustomRadio(
+                              gender: genders['Female'],
+                              position: 1,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 30),
                 CustomTextField(
                   type: TextFieldType.phoneNumber,
                   label: 'Phone Number',
@@ -259,6 +314,7 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                               .trim(),
                           firstName: _formData['firstName'].toString().trim(),
                           lastName: _formData['lastName'].toString().trim(),
+                          gender: _formData['gender'],
                           phoneNumber:
                               _formData['phoneNumber'].toString().trim(),
                           address: _formData['address'].toString().trim(),
