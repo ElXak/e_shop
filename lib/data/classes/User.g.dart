@@ -15,9 +15,7 @@ User _$UserFromJson(Map<String, dynamic> json) {
     lastName: json['LAST_NAME'] as String,
     avatar: json['PERSONAL_PHOTO'] as String,
     gender: json['PERSONAL_GENDER'] as String,
-    birthDate: json['PERSONAL_BIRTHDATE'] == null
-        ? null
-        : DateTime.parse(json['PERSONAL_BIRTHDATE'] as String),
+    birthday: json['PERSONAL_BIRTHDAY'] as String,
     phoneNumber: json['PERSONAL_PHONE'] as String,
     address: json['PERSONAL_STREET'] as String,
     mailbox: json['PERSONAL_MAILBOX'] as String,
@@ -34,7 +32,7 @@ Map<String, dynamic> _$UserToJson(User instance) => <String, dynamic>{
       'LAST_NAME': instance.lastName,
       'PERSONAL_PHOTO': instance.avatar,
       'PERSONAL_GENDER': instance.gender,
-      'PERSONAL_BIRTHDATE': instance.birthDate?.toIso8601String(),
+      'PERSONAL_BIRTHDAY': instance.birthday,
       'PERSONAL_PHONE': instance.phoneNumber,
       'PERSONAL_STREET': instance.address,
       'PERSONAL_MAILBOX': instance.mailbox,

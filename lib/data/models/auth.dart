@@ -253,9 +253,11 @@ class AuthModel extends ChangeNotifier {
     @required String firstName,
     String lastName,
     String gender,
+    String birthday,
     @required String phoneNumber,
     @required String address,
     String mailbox,
+    String city,
     String zipCode,
   }) async {
     var sessionData = await getSession();
@@ -267,13 +269,16 @@ class AuthModel extends ChangeNotifier {
       'NAME': firstName,
       'LAST_NAME': lastName,
       'PERSONAL_GENDER': gender,
+      'PERSONAL_BIRTHDAY': birthday,
       'PERSONAL_PHONE': phoneNumber,
       'PERSONAL_STREET': address,
       'PERSONAL_MAILBOX': mailbox,
+      'PERSONAL_CITY': city,
       'PERSONAL_ZIP': zipCode,
       'save': 'Save profile',
     };
 
+    // print('postData: $postData');
     NetworkHelper networkHelper = NetworkHelper(kProfileUrl, body: postData);
     var serverResponse = await networkHelper.postData();
 
@@ -286,6 +291,7 @@ class AuthModel extends ChangeNotifier {
           .then((prefs) => prefs.setString('saved_username', userLogin));
     }
 
+    // print('arUser: ${serverResponse['arUser']}');
     getUser(serverResponse['arUser']);
 
     return serverResponse;

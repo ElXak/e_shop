@@ -6,6 +6,10 @@ class ProfilePic extends StatelessWidget {
     Key key,
   }) : super(key: key);
 
+  void _changeAvatar() {
+    //TODO change picture
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -17,8 +21,12 @@ class ProfilePic extends StatelessWidget {
           fit: StackFit.expand,
           overflow: Overflow.visible,
           children: [
-            CircleAvatar(
-              backgroundImage: AssetImage('assets/images/Profile Image.png'),
+            InkWell(
+              borderRadius: BorderRadius.circular(50),
+              onTap: () => _changeAvatar(),
+              child: CircleAvatar(
+                backgroundImage: AssetImage('assets/images/Profile Image.png'),
+              ),
             ),
             Positioned(
               right: -12,
@@ -34,9 +42,7 @@ class ProfilePic extends StatelessWidget {
                         color: Theme.of(context).scaffoldBackgroundColor),
                   ),
                   color: Theme.of(context).buttonColor,
-                  onPressed: () {
-                    //TODO change picture
-                  },
+                  onPressed: () => _changeAvatar(),
                   child: SvgPicture.asset('assets/icons/Camera Icon.svg'),
                 ),
               ),

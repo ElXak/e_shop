@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:provider/provider.dart';
 import 'package:sprintf/sprintf.dart';
@@ -35,9 +36,32 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
 
   // String _status = 'no-action';
   bool showSpinner = false;
-  // Gender selectedGender;
 
   final List<String> errors = [];
+  final List<String> _cities = [
+    'Выберите город',
+    'Душанбе',
+    'Худжанд',
+    'Бохтар',
+    'Куляб',
+    'Истаравшан',
+    'Турсунзаде',
+    'Канибадам',
+    'Исфара',
+    'Гулистон',
+    'Вахдат',
+    'Пенджикент',
+    'Бустон',
+    'Хорог',
+    'Нурек',
+    'Гиссар',
+    'Истиклол',
+    'Левакант',
+    'Рогун',
+  ];
+
+  String _selectedCity = "Выберите город";
+  String newCity, newBirthday, _birthday;
 
   Map<String, String> _formData = {};
 
@@ -66,6 +90,20 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
     }
   }
 
+  String convertDate(String date) {
+    List<String> dateList = date.split('.');
+    return '${dateList[2]}-${dateList[1]}-${dateList[0]}';
+  }
+
+/*
+  @override
+  void initState() {
+    _controllerBirthday =
+        TextEditingController(text: DateTime.now().toString());
+    super.initState();
+  }
+*/
+
   @override
   Widget build(BuildContext context) {
     final _auth = Provider.of<AuthModel>(context, listen: true);
@@ -76,11 +114,17 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
         TextEditingController(text: _auth.user.firstName ?? '');
     _controllerLastName =
         TextEditingController(text: _auth.user.lastName ?? '');
+
+    _birthday = convertDate(_auth.user.birthday) ?? DateTime.now().toString();
+
     _controllerPhoneNumber =
         TextEditingController(text: _auth.user.phoneNumber ?? '');
     _controllerAddress = TextEditingController(text: _auth.user.address ?? '');
     _controllerMailbox = TextEditingController(text: _auth.user.mailbox ?? '');
     _controllerZipCode = TextEditingController(text: _auth.user.zipCode ?? '');
+
+    _selectedCity = _auth.user.city ?? 'Выберите город';
+    _formData['city'] = newCity ?? _selectedCity;
 
     return ModalProgressHUD(
       inAsyncCall: showSpinner,
@@ -193,8 +237,6 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                           InkWell(
                             borderRadius: BorderRadius.circular(20),
                             onTap: () {
-                              _formData['gender'] = 'M';
-
                               setState(() {
                                 genders['Male'].isSelected = true;
                                 genders['Female'].isSelected = false;
@@ -208,8 +250,6 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                           InkWell(
                             borderRadius: BorderRadius.circular(20),
                             onTap: () {
-                              _formData['gender'] = 'F';
-
                               setState(() {
                                 genders['Male'].isSelected = false;
                                 genders['Female'].isSelected = true;
@@ -224,6 +264,28 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                       ),
                     ),
                   ],
+                ),
+                SizedBox(height: 30),
+                DateTimePicker(
+                  type: DateTimePickerType.date,
+                  dateMask: 'dd.MM.yyyy',
+                  controller:
+                      TextEditingController(text: newBirthday ?? _birthday),
+                  firstDate: DateTime(1950),
+                  lastDate: DateTime.now(),
+                  calendarTitle: 'SELECT BIRTHDAY',
+                  decoration: InputDecoration(
+                    labelText: 'Birthday',
+                    suffixIcon: Padding(
+                      padding: const EdgeInsets.only(right: 16.0),
+                      child: Icon(Icons.event),
+                    ),
+                  ),
+                  onChanged: (value) {
+                    newBirthday = value;
+                    _formData['birthday'] = value;
+                  },
+                  onSaved: (value) => _formData['birthday'] = value,
                 ),
                 SizedBox(height: 30),
                 CustomTextField(
@@ -274,6 +336,67 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                   controller: _controllerMailbox,
                   onSave: (newValue) => _formData['mailbox'] = newValue,
                 ),
+                Stack(
+                  // fit: StackFit.expand,
+                  overflow: Overflow.visible,
+                  children: [
+                    Container(
+                      padding: EdgeInsets.only(
+                          left: 40, right: 30, top: 10, bottom: 10),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(28),
+                        border: Border.all(
+                          color: kTextColor,
+                        ),
+                      ),
+                      child: DropdownButtonHideUnderline(
+                        child: DropdownButton<String>(
+                          // dropdownColor: kPrimaryColor,
+                          isExpanded: true,
+                          icon: Icon(FontAwesomeIcons.city),
+/*
+                          selectedItemBuilder: (BuildContext context) {
+                            return _cities.map((String value) {
+                              return Text(newCity ?? _selectedCity);
+                            }).toList();
+                          },
+*/
+                          items: _cities
+                              .map(
+                                (String dropDownStringItem) =>
+                                    DropdownMenuItem<String>(
+                                  value: dropDownStringItem,
+                                  child: Row(
+                                    children: [
+                                      Text(dropDownStringItem),
+                                    ],
+                                  ),
+                                ),
+                              )
+                              .toList(),
+                          onChanged: (value) {
+                            if (!mounted) return;
+                            setState(() {
+                              newCity = value;
+                            });
+                            // _formData['city'] = newCity;
+                          },
+                          value: newCity ?? _selectedCity,
+                        ),
+                      ),
+                    ),
+                    Positioned(
+                      left: 30,
+                      top: -8,
+                      child: Container(
+                        padding: EdgeInsets.symmetric(horizontal: 10),
+                        color: Theme.of(context).scaffoldBackgroundColor,
+                        child: Text('City'),
+                      ),
+                    )
+                  ],
+                ),
+                SizedBox(height: 30),
                 CustomTextField(
                   type: TextFieldType.zipCode,
                   label: 'Zip Code',
@@ -302,6 +425,15 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
 
                         form.save();
 
+                        if (genders['Male'].isSelected == true) {
+                          _formData['gender'] = 'M';
+                        } else if (genders['Female'].isSelected == true) {
+                          _formData['gender'] = 'F';
+                        }
+
+                        final DateTime birthday =
+                            DateTime.parse(_formData['birthday']);
+
                         _auth
                             .editProfile(
                           userLogin: _formData['login']
@@ -315,10 +447,12 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                           firstName: _formData['firstName'].toString().trim(),
                           lastName: _formData['lastName'].toString().trim(),
                           gender: _formData['gender'],
+                          birthday: DateFormat('dd.MM.yyyy').format(birthday),
                           phoneNumber:
                               _formData['phoneNumber'].toString().trim(),
                           address: _formData['address'].toString().trim(),
                           mailbox: _formData['mailbox'].toString().trim(),
+                          city: _formData['city'],
                           zipCode: _formData['zipCode'].toString().trim(),
                         )
                             .then((result) {

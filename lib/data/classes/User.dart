@@ -15,7 +15,7 @@ class User {
     this.lastName,
     this.avatar,
     this.gender,
-    this.birthDate,
+    this.birthday,
     this.phoneNumber,
     this.address,
     this.mailbox,
@@ -45,8 +45,8 @@ class User {
   @JsonKey(name: 'PERSONAL_GENDER', nullable: true)
   final String gender;
 
-  @JsonKey(name: 'PERSONAL_BIRTHDATE', nullable: true)
-  final DateTime birthDate;
+  @JsonKey(name: 'PERSONAL_BIRTHDAY', nullable: true)
+  final String birthday;
 
   @JsonKey(name: 'PERSONAL_PHONE', nullable: true)
   final String phoneNumber;
