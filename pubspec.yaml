@@ -32,15 +32,17 @@ dependencies:
   provider: ^4.3.3 # for State management
   shared_preferences: ^0.5.12+4 # for saving setting to local storage
   theme_provider: ^0.4.0+1 # for using multiple themes like dark/light
-  http: ^0.12.2 # for converting data to jason
+  http: ^0.13.0 # for converting data to jason
   json_annotation: ^3.1.1 # for annotation of data for jason
-  local_auth: ^0.6.3+4 # authentication sensors such as Fingerprint Reader and Touch ID
+  local_auth: ^1.1.0 # authentication sensors such as Fingerprint Reader and Touch ID ^1.1.0
   uuid: ^2.2.2 # RFC4122 (v1, v4, v5) UUID Generator and Parser
   modal_progress_hud: ^0.1.3 # loading progress spinner
   sprintf: ^5.0.0 # used for localization
   url_launcher: ^5.7.10 # for launching phone call and mailto
   font_awesome_flutter: 8.4.0 # icons
   date_time_picker: ^1.1.1
+  intl: ^0.17.0 # ^0.17.0 for local_auth ^0.16.1
+  image_picker: ^0.7.2
 
 dev_dependencies:
   flutter_test:
