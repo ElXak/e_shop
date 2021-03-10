@@ -1,24 +1,25 @@
+import 'package:date_time_picker/date_time_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:intl/intl.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:provider/provider.dart';
 import 'package:sprintf/sprintf.dart';
-import 'package:date_time_picker/date_time_picker.dart';
 
-import 'components/custom_radio.dart';
-import 'components/form_screen.dart';
-import 'components/scrolling_body.dart';
-import 'components/form_text.dart';
-import 'components/form_title.dart';
-import 'components/form_error.dart';
-import 'components/custom_text_field.dart';
-import '../components/default_button.dart';
 import '../../constants.dart';
-import '../../data/models/auth.dart';
 import '../../data/classes/Gender.dart';
+import '../../data/models/auth.dart';
 import '../../enums.dart';
 import '../../utils/size_config.dart';
+import '../components/default_button.dart';
 import '../home/home_screen.dart';
+import 'components/custom_radio.dart';
+import 'components/custom_text_field.dart';
+import 'components/form_error.dart';
+import 'components/form_screen.dart';
+import 'components/form_text.dart';
+import 'components/form_title.dart';
+import 'components/scrolling_body.dart';
 
 class CompleteProfileScreen extends StatefulWidget {
   static String routeName = '/complete_profile';
@@ -62,6 +63,15 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
 
   String _selectedCity = "Выберите город";
   String newCity, newBirthday, _birthday;
+  String _newLogin,
+      _newEmail,
+      _newFirstName,
+      _newLastName,
+      _newGender,
+      _newPhoneNumber,
+      _newAddress,
+      _newMailbox,
+      _newZipCode;
 
   Map<String, String> _formData = {};
 
@@ -91,40 +101,73 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
   }
 
   String convertDate(String date) {
+    if (date == null) {
+      return DateTime.now().toString();
+    }
+
     List<String> dateList = date.split('.');
     return '${dateList[2]}-${dateList[1]}-${dateList[0]}';
   }
 
-/*
-  @override
-  void initState() {
-    _controllerBirthday =
-        TextEditingController(text: DateTime.now().toString());
-    super.initState();
+  TextEditingController _loadController({String fromUser, String fromField}) {
+    String controllerText;
+    if (fromField != null)
+      controllerText = fromField;
+    else if (fromUser != null)
+      controllerText = fromUser;
+    else
+      controllerText = '';
+
+    return TextEditingController(text: controllerText);
   }
-*/
 
   @override
   Widget build(BuildContext context) {
     final _auth = Provider.of<AuthModel>(context, listen: true);
 
-    _controllerLogin = TextEditingController(text: _auth.user.login ?? '');
-    _controllerEmail = TextEditingController(text: _auth.user.email ?? '');
-    _controllerFirstName =
-        TextEditingController(text: _auth.user.firstName ?? '');
+    _controllerLogin =
+        _loadController(fromUser: _auth.user.login, fromField: _newLogin);
+    _controllerEmail =
+        _loadController(fromUser: _auth.user.email, fromField: _newEmail);
+    _controllerFirstName = _loadController(
+        fromUser: _auth.user.firstName, fromField: _newFirstName);
     _controllerLastName =
-        TextEditingController(text: _auth.user.lastName ?? '');
+        _loadController(fromUser: _auth.user.lastName, fromField: _newLastName);
+    _controllerPhoneNumber = _loadController(
+        fromUser: _auth.user.phoneNumber, fromField: _newPhoneNumber);
+    _controllerAddress =
+        _loadController(fromUser: _auth.user.address, fromField: _newAddress);
+    _controllerMailbox =
+        _loadController(fromUser: _auth.user.mailbox, fromField: _newMailbox);
+    _controllerZipCode =
+        _loadController(fromUser: _auth.user.zipCode, fromField: _newZipCode);
 
     _birthday = convertDate(_auth.user.birthday) ?? DateTime.now().toString();
 
-    _controllerPhoneNumber =
-        TextEditingController(text: _auth.user.phoneNumber ?? '');
-    _controllerAddress = TextEditingController(text: _auth.user.address ?? '');
-    _controllerMailbox = TextEditingController(text: _auth.user.mailbox ?? '');
-    _controllerZipCode = TextEditingController(text: _auth.user.zipCode ?? '');
-
     _selectedCity = _auth.user.city ?? 'Выберите город';
     _formData['city'] = newCity ?? _selectedCity;
+
+    switch (_newGender) {
+      case 'M':
+        genders['Male'].isSelected = true;
+        genders['Female'].isSelected = false;
+        break;
+      case 'F':
+        genders['Male'].isSelected = false;
+        genders['Female'].isSelected = true;
+        break;
+      default:
+        if (_auth.user.gender == 'M') {
+          genders['Male'].isSelected = true;
+          genders['Female'].isSelected = false;
+        } else if (_auth.user.gender == 'F') {
+          genders['Male'].isSelected = false;
+          genders['Female'].isSelected = true;
+        } else {
+          genders['Male'].isSelected = false;
+          genders['Female'].isSelected = false;
+        }
+    }
 
     return ModalProgressHUD(
       inAsyncCall: showSpinner,
@@ -160,6 +203,7 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                     if (value.isNotEmpty) {
                       removeError(error: kLoginNullError);
                     }
+                    _newLogin = value;
                     // if (emailValidatorRegExp.hasMatch(value)) {
                     //   removeError(error: kInvalidEmailError);
                     // }
@@ -189,6 +233,7 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                     if (emailValidatorRegExp.hasMatch(value)) {
                       removeError(error: kInvalidEmailError);
                     }
+                    _newEmail = value;
                   },
                   onSave: (newValue) => _formData['email'] = newValue,
                 ),
@@ -209,6 +254,7 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                     if (value.isNotEmpty) {
                       removeError(error: kNameNullError);
                     }
+                    _newFirstName = value;
                   },
                   onSave: (newValue) => _formData['firstName'] = newValue,
                 ),
@@ -218,6 +264,9 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                   hint: 'Enter your last name',
                   icon: 'assets/icons/User.svg',
                   controller: _controllerLastName,
+                  onChange: (value) {
+                    _newLastName = value;
+                  },
                   onSave: (newValue) => _formData['lastName'] = newValue,
                 ),
                 Row(
@@ -226,7 +275,6 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                   children: [
                     Text('Gender:'),
                     Container(
-                      // padding: EdgeInsets.all(getProportionateScreenWidth(15)),
                       decoration: BoxDecoration(
                         color: kPrimaryLightColor,
                         borderRadius: BorderRadius.circular(20),
@@ -238,8 +286,9 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                             borderRadius: BorderRadius.circular(20),
                             onTap: () {
                               setState(() {
-                                genders['Male'].isSelected = true;
-                                genders['Female'].isSelected = false;
+                                _newGender = 'M';
+                                // genders['Male'].isSelected = true;
+                                // genders['Female'].isSelected = false;
                               });
                             },
                             child: CustomRadio(
@@ -251,8 +300,9 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                             borderRadius: BorderRadius.circular(20),
                             onTap: () {
                               setState(() {
-                                genders['Male'].isSelected = false;
-                                genders['Female'].isSelected = true;
+                                _newGender = 'F';
+                                // genders['Male'].isSelected = false;
+                                // genders['Female'].isSelected = true;
                               });
                             },
                             child: CustomRadio(
@@ -305,6 +355,7 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                     if (value.isNotEmpty) {
                       removeError(error: kPhoneNumberNullError);
                     }
+                    _newPhoneNumber = value;
                   },
                   onSave: (newValue) => _formData['phoneNumber'] = newValue,
                 ),
@@ -325,6 +376,7 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                     if (value.isNotEmpty) {
                       removeError(error: kAddressNullError);
                     }
+                    _newAddress = value;
                   },
                   onSave: (newValue) => _formData['address'] = newValue,
                 ),
@@ -334,6 +386,9 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                   hint: 'Enter your mailbox number',
                   icon: 'assets/icons/Mail.svg',
                   controller: _controllerMailbox,
+                  onChange: (value) {
+                    _newMailbox = value;
+                  },
                   onSave: (newValue) => _formData['mailbox'] = newValue,
                 ),
                 Stack(
@@ -351,7 +406,6 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                       ),
                       child: DropdownButtonHideUnderline(
                         child: DropdownButton<String>(
-                          // dropdownColor: kPrimaryColor,
                           isExpanded: true,
                           icon: Icon(FontAwesomeIcons.city),
 /*
@@ -403,6 +457,9 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                   hint: 'Enter your Zip Code',
                   icon: 'assets/icons/Mail.svg',
                   controller: _controllerZipCode,
+                  onChange: (value) {
+                    _newZipCode = value;
+                  },
                   onSave: (newValue) => _formData['zipCode'] = newValue,
                 ),
                 FormError(errors: errors),

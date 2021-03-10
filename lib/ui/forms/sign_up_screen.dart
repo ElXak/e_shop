@@ -25,7 +25,8 @@ class SignUpScreen extends StatefulWidget {
 
 class _SignUpScreenState extends State<SignUpScreen> {
   final _formKey = GlobalKey<FormState>();
-  String captchaSid;
+  Future<String> captchaSid;
+  String captchaCode;
 
   // String _status = 'no-action';
   bool showSpinner = false;
@@ -52,7 +53,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   @override
   Widget build(BuildContext context) {
     final _auth = Provider.of<AuthModel>(context, listen: true);
-    captchaSid = _auth.getCaptchaSid().toString();
+    captchaSid = _auth.getCaptchaSid();
 
     return ModalProgressHUD(
       inAsyncCall: showSpinner,
@@ -145,6 +146,34 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   },
                   onSave: (newValue) => _formData['confirmPassword'] = newValue,
                 ),
+                FutureBuilder<String>(
+                  future: captchaSid,
+                  builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
+                    Widget child;
+                    if (snapshot.hasData) {
+                      captchaCode = snapshot.data;
+                      child = Image.network(
+                        kCaptchaImageUrl + captchaCode,
+                        fit: BoxFit.fitWidth,
+                      );
+                    } else if (snapshot.hasError) {
+                      child = FormError(errors: ['${snapshot.error}']);
+                    } else {
+                      child = LinearProgressIndicator(
+                        valueColor: AlwaysStoppedAnimation<Color>(kPrimaryColor),
+                      );
+                    }
+                    return Padding(
+                      padding:
+                      EdgeInsets.only(bottom: getProportionateScreenHeight(30)),
+                      child: SizedBox(
+                        width: double.infinity,
+                        child: child,
+                      ),
+                    );
+                  },
+                ),
+/*
                 Padding(
                   padding:
                       EdgeInsets.only(bottom: getProportionateScreenHeight(30)),
@@ -154,12 +183,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       kCaptchaImageUrl + captchaSid,
                       fit: BoxFit.fitWidth,
                     ),
-                    // child: Image.network(
-                    //   kCaptchaImageUrl + captchaSid,
-                    //   fit: BoxFit.fitWidth,
-                    // ),
                   ),
                 ),
+*/
                 CustomTextField(
                   type: TextFieldType.captcha,
                   label: 'Captcha',
@@ -222,7 +248,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           userPassword: _formData['password'].toString().trim(),
                           confirmPassword:
                               _formData['confirmPassword'].toString().trim(),
-                          captchaSid: captchaSid,
+                          captchaSid: captchaCode,
                           captcha: _formData['captcha'].toString().trim(),
                         )
                             .then((result) {

@@ -297,14 +297,15 @@ class AuthModel extends ChangeNotifier {
     return serverResponse;
   }
 
-  Future<dynamic> getCaptchaSid() async {
+  Future<String> getCaptchaSid() async {
     NetworkHelper networkHelper = NetworkHelper(kCaptchaCodeUrl);
     var serverResponse = await networkHelper.getData();
 
     // notifyListeners();
 
-    if (serverResponse == null) return {'result': 'ERROR'};
-    return serverResponse;
+    if (serverResponse == null) return 'ERROR';
+
+    return serverResponse['CAPTCHA_CODE'];
   }
 
   Future<dynamic> getSession() async {

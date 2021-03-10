@@ -56,10 +56,10 @@ const String kNameNullError = "Please enter your name";
 const String kPhoneNumberNullError = "Please enter your phone number";
 const String kAddressNullError = "Please enter your address";
 
-const String kHostURL = 'https://lamode.tj';
-const String kFormApiUrl = '$kHostURL/json/auth.php';
-const String kCaptchaCodeUrl = '$kHostURL/json/captcha.php';
+const String kHostURL = 'lamode.tj';
+const String kFormApiUrl = '/json/auth.php';
+const String kCaptchaCodeUrl = '/json/captcha.php';
 const String kCaptchaImageUrl =
-    '$kHostURL/bitrix/tools/captcha.php?captcha_sid=';
-const String kSessionIdUrl = '$kHostURL/json/session.php';
-const String kProfileUrl = '$kHostURL/json/profile.php';
+    'https://lamode.tj/bitrix/tools/captcha.php?captcha_sid=';
+const String kSessionIdUrl = '/json/session.php';
+const String kProfileUrl = '/json/profile.php';

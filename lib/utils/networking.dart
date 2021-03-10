@@ -1,8 +1,10 @@
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
+import '../constants.dart';
+
 class NetworkHelper {
-  final String url;
+  final url;
   final Map<String, String> headers, body;
 
   NetworkHelper(
@@ -13,7 +15,7 @@ class NetworkHelper {
 
   Future getData() async {
     http.Response response = await http.get(
-      url,
+      Uri.https(kHostURL, url),
       headers: headers,
     );
 
@@ -29,7 +31,7 @@ class NetworkHelper {
 
   Future postData() async {
     http.Response response = await http.post(
-      url,
+      Uri.https(kHostURL, url),
       headers: headers,
       body: body,
     );

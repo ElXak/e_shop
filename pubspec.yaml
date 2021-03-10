@@ -27,8 +27,8 @@ dependencies:
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
-  cupertino_icons: ^1.0.0
-  flutter_svg: ^0.19.1 # helps to use SVG in app
+  cupertino_icons: ^1.0.2
+  flutter_svg: ^0.19.3 # helps to use SVG in app
   provider: ^4.3.3 # for State management
   shared_preferences: ^0.5.12+4 # for saving setting to local storage
   theme_provider: ^0.4.0+1 # for using multiple themes like dark/light
@@ -40,7 +40,7 @@ dependencies:
   sprintf: ^5.0.0 # used for localization
   url_launcher: ^5.7.10 # for launching phone call and mailto
   font_awesome_flutter: 8.4.0 # icons
-  date_time_picker: ^1.1.1
+  date_time_picker: ^2.0.0
   intl: ^0.17.0 # ^0.17.0 for local_auth ^0.16.1
   image_picker: ^0.7.2
 
