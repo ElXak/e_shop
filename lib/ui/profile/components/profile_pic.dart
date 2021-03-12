@@ -19,7 +19,7 @@ class ProfilePic extends StatelessWidget {
         width: 115,
         child: Stack(
           fit: StackFit.expand,
-          overflow: Overflow.visible,
+          clipBehavior: Clip.none,
           children: [
             InkWell(
               borderRadius: BorderRadius.circular(50),
@@ -34,14 +34,16 @@ class ProfilePic extends StatelessWidget {
               child: SizedBox(
                 height: 46,
                 width: 46,
-                child: FlatButton(
-                  padding: EdgeInsets.zero,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(50),
+                child: OutlinedButton(
+                  style: OutlinedButton.styleFrom(
+                    backgroundColor: Theme.of(context).buttonColor,
                     side: BorderSide(
                         color: Theme.of(context).scaffoldBackgroundColor),
+                    padding: EdgeInsets.zero,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(50),
+                    ),
                   ),
-                  color: Theme.of(context).buttonColor,
                   onPressed: () => _changeAvatar(),
                   child: SvgPicture.asset('assets/icons/Camera Icon.svg'),
                 ),

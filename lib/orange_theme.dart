@@ -6,6 +6,7 @@ ThemeData orangeTheme() {
   return ThemeData(
     primaryColor: kPrimaryColor,
     accentColor: kSecondaryColor,
+    primaryColorLight: kPrimaryLightColor,
     scaffoldBackgroundColor: Colors.white,
     fontFamily: 'Muli',
     appBarTheme: appBarTheme(),
@@ -14,6 +15,7 @@ ThemeData orangeTheme() {
     visualDensity: VisualDensity.adaptivePlatformDensity,
     buttonColor: kSecondaryButtonColor,
     shadowColor: Color(0xFFB0B0B0).withOpacity(0.2),
+    outlinedButtonTheme: outlinedButtonThemeData(),
     // buttonTheme: buttonThemeData(),
   );
 }
@@ -29,6 +31,17 @@ InputDecorationTheme inputDecorationTheme() {
     enabledBorder: outlineInputBorder,
     focusedBorder: outlineInputBorder,
     border: outlineInputBorder,
+  );
+}
+
+OutlinedButtonThemeData outlinedButtonThemeData() {
+  return OutlinedButtonThemeData(
+    style: OutlinedButton.styleFrom(
+      backgroundColor: kPrimaryColor,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(20),
+      ),
+    ),
   );
 }
 

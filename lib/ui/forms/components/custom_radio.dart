@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../../../constants.dart';
 import '../../../data/classes/Gender.dart';
 
 class CustomRadio extends StatelessWidget {
@@ -20,7 +19,10 @@ class CustomRadio extends StatelessWidget {
           ? EdgeInsets.only(top: 5, bottom: 5, left: 5, right: 1)
           : EdgeInsets.only(top: 5, bottom: 5, right: 5),
       decoration: BoxDecoration(
-        color: gender.isSelected ? kPrimaryColor : Colors.white,
+        color: gender.isSelected
+            ? Theme.of(context).primaryColor
+            // ? kPrimaryColor
+            : Theme.of(context).scaffoldBackgroundColor,
         borderRadius: position == 0
             ? BorderRadius.only(
                 topLeft: Radius.circular(15),

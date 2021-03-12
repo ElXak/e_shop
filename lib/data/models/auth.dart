@@ -5,10 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../classes/User.dart';
-import '../classes/Gender.dart';
 import '../../constants.dart';
 import '../../utils/networking.dart';
+import '../classes/Gender.dart';
+import '../classes/User.dart';
 
 class AuthModel extends ChangeNotifier {
   String errorMessage = '';
@@ -97,7 +97,8 @@ class AuthModel extends ChangeNotifier {
     final LocalAuthentication auth = LocalAuthentication();
     bool authenticated = false;
     try {
-      authenticated = await auth.authenticateWithBiometrics(
+      authenticated = await auth.authenticate(
+        biometricOnly: true,
         localizedReason: 'Scan your fingerprint to authenticate',
         useErrorDialogs: true,
         stickyAuth: true,

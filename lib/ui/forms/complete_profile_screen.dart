@@ -276,7 +276,7 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                     Text('Gender:'),
                     Container(
                       decoration: BoxDecoration(
-                        color: kPrimaryLightColor,
+                        color: Theme.of(context).primaryColorLight,
                         borderRadius: BorderRadius.circular(20),
                       ),
                       child: Row(
@@ -393,7 +393,7 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                 ),
                 Stack(
                   // fit: StackFit.expand,
-                  overflow: Overflow.visible,
+                  clipBehavior: Clip.none,
                   children: [
                     Container(
                       padding: EdgeInsets.only(
@@ -441,7 +441,7 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                     ),
                     Positioned(
                       left: 30,
-                      top: -8,
+                      top: -7,
                       child: Container(
                         padding: EdgeInsets.symmetric(horizontal: 10),
                         color: Theme.of(context).scaffoldBackgroundColor,

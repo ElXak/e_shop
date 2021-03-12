@@ -22,7 +22,7 @@ enum FormName {
 
 enum MenuState {
   home,
-  categories,
+  catalog,
   discounts,
   notifications,
   messages,

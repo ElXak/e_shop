@@ -2,14 +2,14 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
-import '../../enums.dart';
-import 'components/body.dart';
-import '../components/custom_bottom_nav_bar.dart';
-import '../components/app_drawer.dart';
-import 'components/icon_btn_with_counter.dart';
 import '../../data/classes/CartItem.dart';
+import '../../enums.dart';
 import '../cart/cart_screen.dart';
-import 'components/search_field.dart';
+import '../components/app_drawer.dart';
+import '../components/custom_bottom_nav_bar.dart';
+import '../components/search_field.dart';
+import 'components/body.dart';
+import 'components/icon_btn_with_counter.dart';
 
 class HomeScreen extends StatefulWidget {
   static String routeName = '/home';
@@ -18,7 +18,31 @@ class HomeScreen extends StatefulWidget {
   _HomeScreenState createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _HomeScreenState extends State<HomeScreen>
+    with SingleTickerProviderStateMixin {
+  TabController _tabController;
+  int _selectedTabIndex = 0;
+
+  List<Widget> tabsList = [
+    Tab(text: 'Женщинам'),
+    Tab(text: 'Мужчинам'),
+    Tab(text: 'Обувь'),
+    Tab(text: 'Аксессуары'),
+    Tab(text: 'Образы'),
+  ];
+
+  @override
+  void initState() {
+    super.initState();
+    _tabController = TabController(length: tabsList.length, vsync: this);
+    _tabController.addListener(() {
+      setState(() {
+        _selectedTabIndex = _tabController.index;
+      });
+      print('Selected Index: ${_tabController.index.toString()}');
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -70,9 +94,27 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           SizedBox(width: 8),
         ],
+        bottom: TabBar(
+          onTap: (index) {
+            // Should not used it as it only called when tab options are clicked,
+            // not when user swapped
+          },
+          controller: _tabController,
+          tabs: tabsList,
+          isScrollable: true,
+        ),
       ),
       drawer: AppDrawer(),
-      body: Body(),
+      body: TabBarView(
+        controller: _tabController,
+        children: [
+          Body(),
+          Body(),
+          Body(),
+          Body(),
+          Body(),
+        ],
+      ),
       bottomNavigationBar: CustomBottomNavBar(selectedMenu: MenuState.home),
     );
   }

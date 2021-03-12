@@ -3,6 +3,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../constants.dart';
 import '../../enums.dart';
+import '../catalog/catalog_screen.dart';
+import '../discounts/discounts_screen.dart';
 import '../home/home_screen.dart';
 import '../profile/profile_screen.dart';
 
@@ -50,11 +52,12 @@ class CustomBottomNavBar extends StatelessWidget {
             IconButton(
               icon: SvgPicture.asset(
                 'assets/icons/categories.svg',
-                color: selectedMenu == MenuState.categories
+                color: selectedMenu == MenuState.catalog
                     ? kPrimaryColor
                     : inActiveIconColor,
               ),
-              onPressed: () => Navigator.pushNamed(context, null),
+              onPressed: () =>
+                  Navigator.pushNamed(context, CatalogScreen.routeName),
             ),
             IconButton(
               icon: SvgPicture.asset(
@@ -64,7 +67,8 @@ class CustomBottomNavBar extends StatelessWidget {
                     : inActiveIconColor,
               ),
               //TODO Go to favorites
-              onPressed: () => Navigator.pushNamed(context, null),
+              onPressed: () =>
+                  Navigator.pushNamed(context, DiscountsScreen.routeName),
             ),
             IconButton(
               icon: SvgPicture.asset(

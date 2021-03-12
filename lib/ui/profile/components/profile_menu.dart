@@ -18,12 +18,15 @@ class ProfileMenu extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-      child: FlatButton(
-        padding: EdgeInsets.all(20),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(15),
+      child: OutlinedButton(
+        style: OutlinedButton.styleFrom(
+          backgroundColor: Theme.of(context).buttonColor,
+          side: BorderSide(color: Theme.of(context).buttonColor),
+          padding: EdgeInsets.all(20),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(15),
+          ),
         ),
-        color: Theme.of(context).buttonColor,
         onPressed: onPress,
         child: Row(
           children: [

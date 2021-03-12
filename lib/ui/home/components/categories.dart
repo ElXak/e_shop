@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-import '../../../constants.dart';
 import '../../../utils/size_config.dart';
 import 'categories_data.dart';
 
@@ -61,10 +60,13 @@ class CategoryCard extends StatelessWidget {
               height: getProportionateScreenWidth(55),
               width: getProportionateScreenWidth(55),
               decoration: BoxDecoration(
-                color: kPrimaryLightColor,
+                color: Theme.of(context).primaryColorLight,
                 borderRadius: BorderRadius.circular(10),
               ),
-              child: SvgPicture.asset(icon),
+              child: SvgPicture.asset(
+                icon,
+                color: Theme.of(context).primaryColor,
+              ),
             ),
             SizedBox(height: 5),
             Text(text, textAlign: TextAlign.center),
